@@ -3,12 +3,12 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: monthly
+      interval: daily
 
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: monthly
+      interval: daily
     allow:
       - dependency-type: all
     groups:
@@ -19,7 +19,7 @@ updates:
   - package-ecosystem: cargo
     directory: src-tauri
     schedule:
-      interval: monthly
+      interval: daily
     allow:
       - dependency-type: all
     groups:
