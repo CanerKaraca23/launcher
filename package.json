@@ -21,6 +21,7 @@
     "axios": "^1.7.7",
     "chart.js": "^4.4.4",
     "i18next": "^23.15.1",
+    "postinstall-postinstall": "^2.1.0",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
@@ -28,7 +29,6 @@
     "react-native": "0.73.9",
     "react-native-animatable": "^1.4.0",
     "react-native-big-list": "^1.6.1",
-    "react-native-web": "^0.19.12",
     "tauri-plugin-upload-api": "https://github.com/tauri-apps/tauri-plugin-upload#v1",
     "zustand": "^4.5.5"
   },
