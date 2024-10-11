@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@react-native-clipboard/clipboard": "^1.14.2",
-    "@tauri-apps/api": "^1.6.0",
+    "@tauri-apps/api": "^2.0.2",
     "axios": "^1.7.7",
     "chart.js": "^4.4.4",
     "i18next": "^23.15.2",
@@ -34,9 +34,9 @@
     "zustand": "^4.5.5"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "1.6.2",
+    "@tauri-apps/cli": "2.0.2",
     "@types/react": "^18.3.11",
-    "@types/react-dom": "^18.3.0",
+    "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.2",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-react-native-web": "^0.19.12",
