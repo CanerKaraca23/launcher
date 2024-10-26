@@ -875,9 +875,9 @@
   integrity sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==
 
 "@react-native-clipboard/clipboard@^1.14.2":
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/@react-native-clipboard/clipboard/-/clipboard-1.14.2.tgz#d290e9f79799e260ba4ebd9e9948079258826b25"
-  integrity sha512-Mb58f3neB6sM9oOtKYVGLvN8KVByea67OA9ekJ0c9FwdH24INu8RJoA7/fq+PRk+7oxbeamAcEoQPRv0uwbbMw==
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/@react-native-clipboard/clipboard/-/clipboard-1.14.3.tgz#3596ade1d85b0accdd2585674fcea3ea185f0e20"
+  integrity sha512-EVWxJfCSyBN2SH5b3JrA/w1qlYu3vihQOfdD7fs/BYp63xL6qy93CvbFDHzF8ooFpGM6f67hkAN+gxl1RfOKuw==
 
 "@react-native-community/cli-clean@12.3.7":
   version "12.3.7"
