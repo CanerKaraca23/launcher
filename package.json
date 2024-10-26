@@ -16,7 +16,7 @@
     "release": "tauri build -t i686-pc-windows-msvc"
   },
   "dependencies": {
-    "@react-native-clipboard/clipboard": "^1.14.2",
+    "@react-native-clipboard/clipboard": "^1.14.3",
     "@tauri-apps/api": "1.6.0",
     "axios": "^1.7.7",
     "chart.js": "^4.4.5",
