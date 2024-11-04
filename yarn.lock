@@ -4083,8 +4083,8 @@ supports-preserve-symlinks-flag@^1.0.0:
 
 "tauri-plugin-upload-api@https://github.com/tauri-apps/tauri-plugin-upload#v1":
   version "0.0.0"
-  uid "2380f348cdf9592fba1b1b11a9bcd33fe6d5ed70"
-  resolved "https://github.com/tauri-apps/tauri-plugin-upload#2380f348cdf9592fba1b1b11a9bcd33fe6d5ed70"
+  uid b6aaf955700e53cd0269d4d2f4ec22eafa6014a7
+  resolved "https://github.com/tauri-apps/tauri-plugin-upload#b6aaf955700e53cd0269d4d2f4ec22eafa6014a7"
   dependencies:
     "@tauri-apps/api" "1.6.0"
 
