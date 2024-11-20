@@ -1311,6 +1311,11 @@
   resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-1.6.0.tgz#745b7e4e26782c3b2ad9510d558fa5bb2cf29186"
   integrity sha512-rqI++FWClU5I2UBp4HXFvl+sBWkdigBkxnpJDQUWttNyG7IZP4FwQGhTNL5EOw0vI8i6eSAJ5frLqO7n7jbJdg==
 
+"@tauri-apps/api@2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-2.0.3.tgz#a5cce324373e56d12a43ca2f6a8d730c04e92f80"
+  integrity sha512-840qk6n8rbXBXMA5/aAgTYsg5JAubKO0nXw5wf7IzGnUuYKGbB4oFBIZtXOIWy+E0kNTDI3qhq5iqsoMJfwp8g==
+
 "@tauri-apps/cli-darwin-arm64@1.6.3":
   version "1.6.3"
   resolved "https://registry.yarnpkg.com/@tauri-apps/cli-darwin-arm64/-/cli-darwin-arm64-1.6.3.tgz#a204b9c686c88d774b7a67e0344cf660a0704558"
@@ -4083,7 +4088,6 @@ supports-preserve-symlinks-flag@^1.0.0:
 
 "tauri-plugin-upload-api@https://github.com/tauri-apps/tauri-plugin-upload#v1":
   version "0.0.0"
-  uid b533733cce4e55e75e5b8bf519e65ebd98fb07fd
   resolved "https://github.com/tauri-apps/tauri-plugin-upload#b533733cce4e55e75e5b8bf519e65ebd98fb07fd"
   dependencies:
     "@tauri-apps/api" "1.6.0"
