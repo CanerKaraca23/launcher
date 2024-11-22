@@ -865,9 +865,9 @@ dependencies = [
 
 [[package]]
 name = "cpufeatures"
-version = "0.2.15"
+version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0ca741a962e1b0bff6d724a1a0958b686406e853bb14061f218562e1896f95e6"
+checksum = "16b80225097f2e5ae4e7179dd2266824648f3e2f49d9134d584b76389d31c4c3"
 dependencies = [
  "libc",
 ]
@@ -2552,9 +2552,9 @@ dependencies = [
 
 [[package]]
 name = "konst"
-version = "0.3.11"
+version = "0.3.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0964faf44d2c3e528ade7bd49c3544687cadcdee7641643469d43bd7259a5d88"
+checksum = "ed986a294ccbcc4cbb7de5a1cf8f62e2473d85cf220e72cb01afe20d49194481"
 dependencies = [
  "const_panic",
  "konst_kernel",
@@ -2563,9 +2563,9 @@ dependencies = [
 
 [[package]]
 name = "konst_kernel"
-version = "0.3.10"
+version = "0.3.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "722062725c1fc0d83cc017e873aac6a2a5ff16a88edfa190bdeb8bd393fcfd97"
+checksum = "599c1232f55c72c7fc378335a3efe1c878c92720838c8e6a4fd87784ef7764de"
 dependencies = [
  "typewit",
 ]
