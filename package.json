@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "1.6.3",
-    "@types/react": "18.3.12",
+    "@types/react": "18.3.14",
     "@types/react-dom": "^19.0.1",
     "@vitejs/plugin-react": "^4.3.4",
     "babel-plugin-inline-import": "^3.0.0",
