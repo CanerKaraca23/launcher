@@ -1438,9 +1438,9 @@
     "@types/istanbul-lib-report" "*"
 
 "@types/node@*":
-  version "22.10.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.10.1.tgz#41ffeee127b8975a05f8c4f83fb89bcb2987d766"
-  integrity sha512-qKgsUwfHZV2WCWLAnVP1JqnpE6Im6h3Y0+fYgMTasNQ7V++CBX5OT1as0g0f+OyubbFqhf6XVNIsmN4IIhEgGQ==
+  version "22.10.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.10.2.tgz#a485426e6d1fdafc7b0d4c7b24e2c78182ddabb9"
+  integrity sha512-Xxr6BBRCAOQixvonOye19wnzyDiUtTeqldOOmj3CkeblonbccA12PFwlufvRdrpjXxqnmUaeiU5EOA+7s5diUQ==
   dependencies:
     undici-types "~6.20.0"
 
@@ -1454,10 +1454,10 @@
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-19.0.2.tgz#ad21f9a1ee881817995fd3f7fd33659c87e7b1b7"
   integrity sha512-c1s+7TKFaDRRxr1TxccIX2u7sfCnc3RxkVyBIUA2lCpyqCF+QoAwQ/CBg7bsMdVwP120HEH143VQezKtef5nCg==
 
-"@types/react@18.3.15":
-  version "18.3.15"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.3.15.tgz#14674f041072c2b17062ae2edb0eb95a45787f98"
-  integrity sha512-XQzbwkCwrsabawgWsvDDwsDTRuH1sf6Uj1fnFYoG03ZXfT54/aBvlylKR9ix70pXAtTn8dFzj358zVcZN4m83w==
+"@types/react@18.3.16":
+  version "18.3.16"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.3.16.tgz#5326789125fac98b718d586ad157442ceb44ff28"
+  integrity sha512-oh8AMIC4Y2ciKufU8hnKgs+ufgbA/dhPTACaZPM86AbwX9QwnFtSoPWEeRUj8fge+v6kFt78BXcDhAU1SrrAsw==
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
@@ -2461,10 +2461,10 @@ hyphenate-style-name@^1.0.3:
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.1.0.tgz#1797bf50369588b47b72ca6d5e65374607cf4436"
   integrity sha512-WDC/ui2VVRrz3jOVi+XtjqkDjiVjTtFaAGiW37k6b+ohyQ5wYDOGkvCZa8+H0nx3gyvv0+BST9xuOgIyGQ00gw==
 
-i18next@^24.0.5:
-  version "24.0.5"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-24.0.5.tgz#2678986eca46411cae0329542a84dd4cd7e5f2f0"
-  integrity sha512-1jSdEzgFPGLZRsQwydoMFCBBaV+PmrVEO5WhANllZPX4y2JSGTxUjJ+xVklHIsiS95uR8gYc/y0hYZWevucNjg==
+i18next@^24.1.0:
+  version "24.1.0"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-24.1.0.tgz#d28cda44977c9620ef8ba75845c604f45e52c351"
+  integrity sha512-suKlX82AlptkMUO5YRfaAeH4FQyyKvR66jNaubTMiyPPMx7INU6PXAiy3PGULc0q6K+t9nxmDf/TRj9KjAivmw==
   dependencies:
     "@babel/runtime" "^7.23.2"
 
