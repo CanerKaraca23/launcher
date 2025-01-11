@@ -20,7 +20,10 @@ jobs:
         with:
           node-version: latest
 
+      - run: cargo clean
+      - run: rustup default nightly
       - run: rustup update nightly
+      - run: cargo clean
 
       - name: Install frontend dependencies
         run: yarn install
