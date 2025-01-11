@@ -28,9 +28,6 @@ jobs:
       - name: Install frontend dependencies
         run: yarn install
 
-      - name: Install rust i686-pc-windows-msvc target
-        run: rustup target add i686-pc-windows-msvc
-
       - name: Build project
         run: yarn release
 
