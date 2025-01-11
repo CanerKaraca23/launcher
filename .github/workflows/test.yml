@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: latest
 
-      - run: rustup default nightly
+      - run: rustup default nightly-i686-pc-windows-msv
 
       - name: Install frontend dependencies
         run: yarn install
