@@ -42,6 +42,6 @@
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-react-native-web": "^0.19.13",
     "typescript": "5.4.5",
-    "vite": "^6.0.7"
+    "vite": "^6.0.9"
   }
 }
