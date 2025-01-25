@@ -12,11 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: latest
-
       - name: Install Rust Nightly
         run: rustup update nightly
 
