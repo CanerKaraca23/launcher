@@ -18,7 +18,7 @@ jobs:
           node-version: latest
 
       - name: Install Rust Nightly
-      - run: rustup update nightly
+        run: rustup update nightly
 
       - name: Install frontend dependencies
         run: yarn install
