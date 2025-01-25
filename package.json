@@ -29,11 +29,11 @@
     "react-native": "0.73.11",
     "react-native-animatable": "^1.4.0",
     "react-native-big-list": "^1.6.1",
+    "react-native-web": "^0.19.13",
     "tauri-plugin-upload-api": "https://github.com/tauri-apps/tauri-plugin-upload#v1",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "1.6.3",
     "@types/react": "18.3.18",
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.4",
