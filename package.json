@@ -18,7 +18,7 @@
   "dependencies": {
     "@react-native-clipboard/clipboard": "^1.16.1",
     "@tauri-apps/api": "1.6.0",
-    "axios": "^1.7.9",
+    "axios": "^1.8.1",
     "chart.js": "^4.4.8",
     "i18next": "^24.2.1",
     "react": "^19.0.0",
@@ -40,6 +40,6 @@
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-react-native-web": "^0.19.13",
     "typescript": "5.4.5",
-    "vite": "^6.1.1"
+    "vite": "^6.2.0"
   }
 }
