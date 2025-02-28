@@ -48,7 +48,7 @@ windows-sys = { version = "0.59", features = [
 ] }
 winreg = "0.55"
 dll-syringe = "0.15"
-windows = { version = "0.59", features = ["Win32_System_Console", "Win32_Foundation"] }
+windows = { version = "0.60", features = ["Win32_System_Console", "Win32_Foundation"] }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
