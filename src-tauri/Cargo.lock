@@ -3261,10 +3261,10 @@ dependencies = [
  "tauri-plugin-upload",
  "tauri-utils 2.6.0",
  "tokio",
- "webview2-com",
+ "webview2-com 0.38.0",
  "winapi",
  "windows 0.61.3",
- "windows-sys 0.52.0",
+ "windows-sys 0.60.2",
  "winreg 0.55.0",
 ]
 
@@ -4895,7 +4895,7 @@ dependencies = [
  "url",
  "uuid",
  "webkit2gtk",
- "webview2-com",
+ "webview2-com 0.19.1",
  "windows 0.39.0",
 ]
 
@@ -4992,7 +4992,7 @@ dependencies = [
  "thiserror 1.0.69",
  "url",
  "uuid",
- "webview2-com",
+ "webview2-com 0.19.1",
  "windows 0.39.0",
 ]
 
@@ -5012,7 +5012,7 @@ dependencies = [
  "tauri-utils 1.6.2",
  "uuid",
  "webkit2gtk",
- "webview2-com",
+ "webview2-com 0.19.1",
  "windows 0.39.0",
  "wry",
 ]
@@ -6228,10 +6228,24 @@ version = "0.19.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b4a769c9f1a64a8734bde70caafac2b96cada12cd4aefa49196b3a386b8b4178"
 dependencies = [
- "webview2-com-macros",
- "webview2-com-sys",
+ "webview2-com-macros 0.6.0",
+ "webview2-com-sys 0.19.0",
  "windows 0.39.0",
  "windows-implement 0.39.0",
+]
+
+[[package]]
+name = "webview2-com"
+version = "0.38.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d4ba622a989277ef3886dd5afb3e280e3dd6d974b766118950a08f8f678ad6a4"
+dependencies = [
+ "webview2-com-macros 0.8.0",
+ "webview2-com-sys 0.38.0",
+ "windows 0.61.3",
+ "windows-core",
+ "windows-implement 0.60.0",
+ "windows-interface",
 ]
 
 [[package]]
@@ -6243,6 +6257,17 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 1.0.109",
+]
+
+[[package]]
+name = "webview2-com-macros"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1d228f15bba3b9d56dde8bddbee66fa24545bd17b48d5128ccf4a8742b18e431"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.104",
 ]
 
 [[package]]
@@ -6258,6 +6283,17 @@ dependencies = [
  "windows 0.39.0",
  "windows-bindgen",
  "windows-metadata",
+]
+
+[[package]]
+name = "webview2-com-sys"
+version = "0.38.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "36695906a1b53a3bf5c4289621efedac12b73eeb0b89e7e1a89b517302d5d75c"
+dependencies = [
+ "thiserror 2.0.12",
+ "windows 0.61.3",
+ "windows-core",
 ]
 
 [[package]]
@@ -6958,7 +6994,7 @@ dependencies = [
  "url",
  "webkit2gtk",
  "webkit2gtk-sys",
- "webview2-com",
+ "webview2-com 0.19.1",
  "windows 0.39.0",
  "windows-implement 0.39.0",
 ]
