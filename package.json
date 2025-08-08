@@ -36,10 +36,10 @@
     "@tauri-apps/cli": "1.6.3",
     "@types/react": "18.3.23",
     "@types/react-dom": "^19.1.7",
-    "@vitejs/plugin-react": "^4.7.0",
+    "@vitejs/plugin-react": "4.7.0",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-react-native-web": "^0.21.0",
     "typescript": "5.4.5",
-    "vite": "^7.0.6"
+    "vite": "^7.1.1"
   }
 }
