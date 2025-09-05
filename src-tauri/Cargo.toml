@@ -25,7 +25,7 @@ dirs-next = "2.0.0"
 regex = "1.11.2"
 runas = "1.2.0"
 simple-logging = "2.0.2"
-log = "0.4.27"
+log = "0.4.28"
 charset-normalizer-rs = "1.0.6"
 tauri-plugin-upload = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 sevenz-rust = "0.6.1"
@@ -40,8 +40,8 @@ once_cell = "1.21.3"
 tauri-utils = { version = "2" }
 
 [target.'cfg(windows)'.dependencies]
-interprocess = { version = "1.2.1", default-features = false }
-windows-sys = { version = "0.60.2", features = [
+interprocess = { version = "2.2.3", default-features = false }
+windows-sys = { version = "0.61.0", features = [
     "Win32_Foundation",
     "Win32_UI_Input_KeyboardAndMouse",
     "Win32_UI_Shell",
@@ -50,7 +50,7 @@ windows-sys = { version = "0.60.2", features = [
 ] }
 winreg = "0.55.0"
 dll-syringe = "0.17.0"
-windows = { version = "0.61.3", features = [
+windows = { version = "0.62.0", features = [
     "Win32_System_Console",
     "Win32_Foundation",
     "Win32_UI",
