@@ -2306,7 +2306,7 @@ dependencies = [
  "libc",
  "percent-encoding",
  "pin-project-lite",
- "socket2 0.6.0",
+ "socket2 0.5.10",
  "system-configuration",
  "tokio",
  "tower-service",
@@ -5029,7 +5029,7 @@ dependencies = [
 [[package]]
 name = "tauri-plugin-upload"
 version = "0.0.0"
-source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v1#658733918e939a6693c9e43e60f99e2c6dd681ac"
+source = "git+https://github.com/tauri-apps/plugins-workspace?branch=v1#b9ba371a7fddaff9b9fd6802a0cc5c79928dbfa4"
 dependencies = [
  "futures-util",
  "log",
@@ -6451,7 +6451,7 @@ version = "0.1.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0978bf7171b3d90bac376700cb56d606feb40f251a475a5d6634613564460b22"
 dependencies = [
- "windows-sys 0.60.2",
+ "windows-sys 0.48.0",
 ]
 
 [[package]]
