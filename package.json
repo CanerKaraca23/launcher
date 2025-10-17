@@ -31,7 +31,7 @@
     "react-native": "0.73.11",
     "react-native-animatable": "^1.4.0",
     "react-native-big-list": "^1.6.4",
-    "react-native-web": "^0.21.1",
+    "react-native-web": "^0.21.2",
     "tauri-plugin-upload-api": "https://github.com/tauri-apps/tauri-plugin-upload#v1",
     "zustand": "^5.0.8"
   },
@@ -41,8 +41,8 @@
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "4.7.0",
     "babel-plugin-inline-import": "^3.0.0",
-    "babel-plugin-react-native-web": "^0.21.1",
+    "babel-plugin-react-native-web": "^0.21.2",
     "typescript": "5.4.5",
-    "vite": "^7.1.9"
+    "vite": "^7.1.10"
   }
 }
