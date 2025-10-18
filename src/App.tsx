@@ -1,6 +1,7 @@
 import { invoke } from "@tauri-apps/api";
 import {
   appWindow,
+  LogicalPosition,
   LogicalSize,
   type PhysicalSize,
 } from "@tauri-apps/api/window";
@@ -110,6 +111,21 @@ const App = memo(() => {
   }, [language]);
 
   useEffect(() => {
+    if (!loading) {
+      const targetSize = mainWindowSize.current || new LogicalSize(1000, 700);
+
+      Promise.all([
+        appWindow.setResizable(true),
+        appWindow.setSize(targetSize),
+      ]);
+
+      if (!IN_GAME) {
+        appWindow.center();
+      }
+    }
+  }, [loading]);
+
+  useEffect(() => {
     let killResizeListener: (() => void) | null = null;
 
     const setupListeners = async () => {
@@ -149,6 +165,17 @@ const App = memo(() => {
     initializeApp();
     setupGameMonitoring();
 
+    if (IN_GAME) {
+      setInterval(async () => {
+        appWindow.setPosition(new LogicalPosition(-15000, -15000));
+
+        const visible = await appWindow.isVisible();
+        if (!visible) {
+          appWindow.show();
+        }
+      }, 100);
+    }
+
     return () => {
       killResizeListener?.();
       if (processCheckInterval.current) {
@@ -159,20 +186,8 @@ const App = memo(() => {
 
   const handleLoadingEnd = useCallback(async () => {
     const endTimer = PerformanceMonitor.time("loading-end");
-
-    try {
-      const targetSize = mainWindowSize.current || new LogicalSize(1000, 700);
-
-      await Promise.all([
-        appWindow.setResizable(true),
-        appWindow.setSize(targetSize),
-        appWindow.center(),
-      ]);
-
-      setLoading(false);
-    } finally {
-      endTimer();
-    }
+    setLoading(false);
+    endTimer();
   }, []);
 
   const appStyle = useMemo(
