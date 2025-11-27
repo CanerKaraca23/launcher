@@ -20,11 +20,12 @@ pub fn decode_buffer(buf: Vec<u8>) -> (String, String) {
     let chardet_encoding = charset2encoding(&detect(&buf).0).to_string().to_lowercase();
 
     // Using charset_normalizer_rs for encoding detection
-    // from_bytes returns a Result in version 1.1.0+; convert to Option and then call get_best()
+    // from_bytes returns a Result in version 1.1.0+; convert to Option and extract encoding string
     let charset_normalizer_encoding = from_bytes(&buf, None)
         .ok()
-        .and_then(|analysis| analysis.get_best())
-        .map(|cd| cd.encoding().to_string().to_lowercase())
+        .and_then(|analysis| {
+            analysis.get_best().map(|cd| cd.encoding().to_string().to_lowercase())
+        })
         .unwrap_or_else(|| "not_found".to_string());
 
     // Determine the most likely actual encoding
