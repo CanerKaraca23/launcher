@@ -32,7 +32,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": "all",
+    "targets": ["msi"],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -44,10 +44,6 @@
       "allowDowngrades": true,
       "certificateThumbprint": null,
       "digestAlgorithm": null,
-      "nsis": {
-        "template": "./nsis/installer.nsi",
-        "installMode": "perMachine"
-      },
       "signCommand": null,
       "timestampUrl": null,
       "tsp": false,
