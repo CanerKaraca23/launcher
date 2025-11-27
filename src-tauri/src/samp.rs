@@ -10,7 +10,7 @@ use std::io::{Cursor, Read};
 #[cfg(target_os = "windows")]
 use std::path::Path;
 #[cfg(target_os = "windows")]
-use tauri::api::path::document_dir;
+use dirs_next::document_dir;
 #[cfg(target_os = "windows")]
 use winreg::enums::*;
 #[cfg(target_os = "windows")]
