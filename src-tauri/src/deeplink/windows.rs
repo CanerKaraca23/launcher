@@ -86,33 +86,39 @@ pub fn listen<F: FnMut(String) + Send + 'static>(mut handler: F) -> Result<()> {
 
 pub fn prepare(identifier: &str) {
     let arg1 = std::env::args().nth(1).unwrap_or_default();
-    let name_result = identifier.to_ns_name::<GenericNamespaced>();
-    if let Ok(name) = name_result {
-        if let Ok(mut conn) = Stream::connect(name) {
-            // We are the secondary instance.
-            // Prep to activate primary instance by allowing another process to take focus.
+    let name = match identifier.to_ns_name::<GenericNamespaced>() {
+        Ok(name) => name,
+        Err(err) => {
+            log::error!("Failed to convert identifier to name: {}", err);
+            ID.set(identifier.to_string())
+                .expect("prepare() called more than once with different identifiers.");
+            return;
+        }
+    };
+    if let Ok(mut conn) = Stream::connect(name) {
+        // We are the secondary instance.
+        // Prep to activate primary instance by allowing another process to take focus.
 
-            // A workaround to allow AllowSetForegroundWindow to succeed - press a key.
-            // This was originally used by Chromium: https://bugs.chromium.org/p/chromium/issues/detail?id=837796
-            dummy_keypress();
+        // A workaround to allow AllowSetForegroundWindow to succeed - press a key.
+        // This was originally used by Chromium: https://bugs.chromium.org/p/chromium/issues/detail?id=837796
+        dummy_keypress();
 
-            // peer_pid is no longer available in interprocess v2, use ASFW_ANY instead
-            let primary_instance_pid = ASFW_ANY;
-            unsafe {
-                let success = AllowSetForegroundWindow(primary_instance_pid) != 0;
-                if !success {
-                    log::warn!("AllowSetForegroundWindow failed.");
-                }
+        // peer_pid is no longer available in interprocess v2, use ASFW_ANY instead
+        let primary_instance_pid = ASFW_ANY;
+        unsafe {
+            let success = AllowSetForegroundWindow(primary_instance_pid) != 0;
+            if !success {
+                log::warn!("AllowSetForegroundWindow failed.");
             }
+        }
 
-            if let Err(io_err) = conn.write_all(arg1.as_bytes()) {
-                log::error!(
-                    "Error sending message to primary instance: {}",
-                    io_err.to_string()
-                );
-            };
-            let _ = conn.write_all(b"\n");
+        if let Err(io_err) = conn.write_all(arg1.as_bytes()) {
+            log::error!(
+                "Error sending message to primary instance: {}",
+                io_err.to_string()
+            );
         };
+        let _ = conn.write_all(b"\n");
     }
     ID.set(identifier.to_string())
         .expect("prepare() called more than once with different identifiers.");
