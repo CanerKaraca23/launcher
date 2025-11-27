@@ -51,9 +51,9 @@ const App = memo(() => {
   const [maximized, setMaximized] = useState(false);
   const { theme } = useTheme();
   const { language } = useGenericPersistentState();
-  const windowSize = useRef<PhysicalSize>();
-  const mainWindowSize = useRef<LogicalSize>();
-  const processCheckInterval = useRef<ReturnType<typeof setInterval>>();
+  const windowSize = useRef<PhysicalSize | null>(null);
+  const mainWindowSize = useRef<LogicalSize | null>(null);
+  const processCheckInterval = useRef<NodeJS.Timeout | null>(null);
 
   const windowResizeListener = useCallback(
     throttle(async ({ payload }: { payload: PhysicalSize }) => {
