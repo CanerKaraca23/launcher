@@ -120,6 +120,7 @@ const AddThirdPartyServerModal = () => {
           value={serverAddress}
           onSubmitEditing={addServer}
           onChangeText={setServerAddress}
+          // @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
           style={[styles.textInput, dynamicStyles.textInput]}
         />
         <TouchableOpacity
@@ -145,6 +146,7 @@ const AddThirdPartyServerModal = () => {
   );
 };
 
+// @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
 const styles = StyleSheet.create({
   container: {
     position: "absolute",

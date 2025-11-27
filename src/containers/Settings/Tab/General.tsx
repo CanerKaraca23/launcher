@@ -125,7 +125,8 @@ const General = () => {
           value={gtasaPath}
           onChangeText={(text) => setGTASAPath(text)}
           style={[
-            styles.pathInput,
+            // @ts-ignore - outlineStyle: "none" is valid for web but not in RN types
+            styles.pathInput as any,
             {
               color: theme.textPrimary,
               backgroundColor: theme.textInputBackgroundColor,
@@ -208,6 +209,7 @@ const General = () => {
   );
 };
 
+// @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
 const styles = StyleSheet.create({
   pathInputContainer: {
     flexDirection: "row",

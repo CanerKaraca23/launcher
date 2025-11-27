@@ -84,6 +84,7 @@ const Advanced = () => {
     </View>
   );
 };
+// @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
 const styles = StyleSheet.create({
   pathInputContainer: {
     flexDirection: "row",
