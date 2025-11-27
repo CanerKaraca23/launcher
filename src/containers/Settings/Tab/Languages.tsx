@@ -1,4 +1,5 @@
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
+import { createWebStyles } from "../../../utils/webStyles";
 import RadioButton from "../../../components/RadioButton";
 import Text from "../../../components/Text";
 import { getLanguages } from "../../../locales";
@@ -66,7 +67,7 @@ const Appearance = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = createWebStyles({
   pathInputContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -80,7 +81,6 @@ const styles = StyleSheet.create({
     height: 29,
     borderRadius: 8,
     borderWidth: 2,
-    // @ts-ignore
     outlineStyle: "none",
   },
   browseButton: {

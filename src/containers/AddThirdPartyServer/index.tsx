@@ -2,12 +2,12 @@ import { clipboard } from "@tauri-apps/api";
 import { t } from "i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
   useWindowDimensions,
 } from "react-native";
+import { createWebStyles } from "../../utils/webStyles";
 import Icon from "../../components/Icon";
 import StaticModal from "../../components/StaticModal";
 import Text from "../../components/Text";
@@ -120,7 +120,7 @@ const AddThirdPartyServerModal = () => {
           value={serverAddress}
           onSubmitEditing={addServer}
           onChangeText={setServerAddress}
-          style={[styles.textInput, dynamicStyles.textInput]}
+          style={[styles.textInput as any, dynamicStyles.textInput]}
         />
         <TouchableOpacity
           style={[styles.addButton, dynamicStyles.addButton]}
@@ -145,7 +145,7 @@ const AddThirdPartyServerModal = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = createWebStyles({
   container: {
     position: "absolute",
     height: 180,
@@ -174,7 +174,6 @@ const styles = StyleSheet.create({
     width: 300,
     height: sc(38),
     borderRadius: sc(5),
-    // @ts-ignore
     outlineStyle: "none",
   },
   addButton: {

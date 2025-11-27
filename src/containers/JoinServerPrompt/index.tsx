@@ -2,12 +2,12 @@ import { t } from "i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Image,
-  StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
   useWindowDimensions,
 } from "react-native";
+import { createWebStyles } from "../../utils/webStyles";
 import DropdownList from "../../components/DropdownList";
 import FeatureDisabledOverlay from "../../components/FeatureDisabledOverlay";
 import Icon from "../../components/Icon";
@@ -272,7 +272,7 @@ const JoinServerPrompt = () => {
               )}
               value={password}
               onChangeText={setPassword}
-              style={[styles.textInput, dynamicStyles.passwordInput]}
+              style={[styles.textInput as any, dynamicStyles.passwordInput]}
             />
           </View>
         )}
@@ -286,8 +286,7 @@ const JoinServerPrompt = () => {
               placeholder={nickName}
               value={perServerNickname}
               onChangeText={handleNicknameChange}
-              // @ts-ignore
-              style={[styles.textInput, dynamicStyles.nicknameInput]}
+              style={[styles.textInput as any, dynamicStyles.nicknameInput as any]}
             />
           </View>
           <TouchableOpacity
@@ -334,7 +333,7 @@ const JoinServerPrompt = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = createWebStyles({
   container: {
     position: "absolute",
     borderRadius: sc(10),
@@ -408,7 +407,6 @@ const styles = StyleSheet.create({
     marginTop: sc(5),
     height: sc(38),
     borderRadius: sc(5),
-    // @ts-ignore
     outlineStyle: "none",
   },
   connectButton: {

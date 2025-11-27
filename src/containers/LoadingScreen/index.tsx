@@ -1,7 +1,8 @@
 import { fs, invoke, path } from "@tauri-apps/api";
 import { FileEntry } from "@tauri-apps/api/fs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
+import { createWebStyles } from "../../utils/webStyles";
 import { download } from "tauri-plugin-upload-api";
 import { getUpdateInfo } from "../../api/apis";
 import Icon from "../../components/Icon";
@@ -514,12 +515,10 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = createWebStyles({
   app: {
-    // @ts-ignore
-    height: "100vh",
-    // @ts-ignore
-    width: "100vw",
+    height: "100vh" as any,
+    width: "100vw" as any,
   },
   appView: {
     height: "100%",

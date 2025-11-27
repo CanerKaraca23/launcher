@@ -1,5 +1,6 @@
 import { t } from "i18next";
-import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Pressable, TouchableOpacity, View } from "react-native";
+import { createWebStyles } from "../../../utils/webStyles";
 import CheckBox from "../../../components/CheckBox";
 import Text from "../../../components/Text";
 import { useGenericPersistentState } from "../../../states/genericStates";
@@ -84,7 +85,7 @@ const Advanced = () => {
     </View>
   );
 };
-const styles = StyleSheet.create({
+const styles = createWebStyles({
   pathInputContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -98,7 +99,6 @@ const styles = StyleSheet.create({
     height: 29,
     borderRadius: 8,
     borderWidth: 2,
-    // @ts-ignore
     outlineStyle: "none",
   },
   browseButton: {

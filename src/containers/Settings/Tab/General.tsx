@@ -1,7 +1,8 @@
 import { invoke, shell } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
 import { t } from "i18next";
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { TextInput, TouchableOpacity, View } from "react-native";
+import { createWebStyles } from "../../../utils/webStyles";
 import Text from "../../../components/Text";
 import { useAppState } from "../../../states/app";
 import { usePersistentServers } from "../../../states/servers";
@@ -125,7 +126,7 @@ const General = () => {
           value={gtasaPath}
           onChangeText={(text) => setGTASAPath(text)}
           style={[
-            styles.pathInput,
+            styles.pathInput as any,
             {
               color: theme.textPrimary,
               backgroundColor: theme.textInputBackgroundColor,
@@ -208,7 +209,7 @@ const General = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = createWebStyles({
   pathInputContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -220,7 +221,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: sc(38),
     borderRadius: sc(5),
-    // @ts-ignore
     outlineStyle: "none",
     fontFamily: "Proxima Nova Regular",
     fontSize: sc(17),

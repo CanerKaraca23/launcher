@@ -58,7 +58,6 @@ const NavBar = memo(() => {
         height: sc(35),
         paddingHorizontal: sc(5),
         borderRadius: sc(5),
-        // @ts-ignore
         outlineStyle: "none",
       },
     }),
@@ -93,7 +92,7 @@ const NavBar = memo(() => {
             onChangeText={handleNicknameChange}
             placeholder={`${t("nickname")}...`}
             placeholderTextColor={theme.textSecondary}
-            style={dynamicStyles.nicknameInput}
+            style={dynamicStyles.nicknameInput as any}
           />
         </View>
       </View>

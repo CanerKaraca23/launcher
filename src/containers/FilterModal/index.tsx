@@ -1,5 +1,6 @@
 import { t } from "i18next";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
+import { createWebStyles } from "../../utils/webStyles";
 import CheckBox from "../../components/CheckBox";
 import Text from "../../components/Text";
 import { useGenericTempState } from "../../states/genericStates";
@@ -15,7 +16,7 @@ const FiltersModal = () => {
   return (
     <View style={styles.overlay}>
       <Pressable
-        style={styles.backdrop}
+        style={styles.backdrop as any}
         onPress={() => showFilterMenu(false)}
       />
       <View style={[styles.modal, { backgroundColor: theme.secondary }]}>
@@ -101,7 +102,7 @@ const FiltersModal = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = createWebStyles({
   overlay: {
     position: "absolute",
     top: 0,
@@ -112,7 +113,6 @@ const styles = StyleSheet.create({
   backdrop: {
     height: "100%",
     width: "100%",
-    // @ts-ignore
     cursor: "default",
   },
   modal: {

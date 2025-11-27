@@ -14,7 +14,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
+import { createWebStyles } from "./utils/webStyles";
 import { DEBUG_MODE, IN_GAME, IN_GAME_PROCESS_ID } from "./constants/app";
 import LoadingScreen from "./containers/LoadingScreen";
 import WindowTitleBar from "./containers/WindowTitleBar";
@@ -232,12 +233,10 @@ const App = memo(() => {
 
 App.displayName = "App";
 
-const styles = StyleSheet.create({
+const styles = createWebStyles({
   app: {
-    // @ts-ignore
-    height: "100vh",
-    // @ts-ignore
-    width: "100vw",
+    height: "100vh" as any,
+    width: "100vw" as any,
   },
   appView: {
     height: "100%",
