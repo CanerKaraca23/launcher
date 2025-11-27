@@ -34,11 +34,3 @@ export function createWebStyles<T extends WebNamedStyles<T>>(
 ): T {
   return StyleSheet.create(styles as any) as T;
 }
-
-/**
- * Helper to create a single web-compatible style object.
- * Useful for inline styles or useMemo style objects.
- */
-export function webStyle<T extends WebViewStyle | WebTextStyle>(style: T): T {
-  return style;
-}
