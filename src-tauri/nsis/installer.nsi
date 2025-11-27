@@ -33,7 +33,7 @@ ${StrLoc}
 !define COPYRIGHT ""
 !define OUTFILE "nsis-output.exe"
 !define ARCH "x86"
-!define PLUGINSPATH ""
+!define PLUGINSPATH "${__FILEDIR__}"
 !define ALLOWDOWNGRADES "true"
 !define DISPLAYLANGUAGESELECTOR "false"
 !define INSTALLWEBVIEW2MODE "embedBootstrapper"
