@@ -3,7 +3,10 @@ use std::{
     path::Path,
 };
 
-use interprocess::local_socket::{LocalSocketListener, LocalSocketStream};
+use interprocess::local_socket::{
+    traits::Stream as _,
+    ListenerOptions, Name, Stream, ToNsName, GenericNamespaced,
+};
 use windows_sys::Win32::UI::{
     Input::KeyboardAndMouse::{SendInput, INPUT, INPUT_0, INPUT_KEYBOARD, KEYBDINPUT},
     WindowsAndMessaging::{AllowSetForegroundWindow, ASFW_ANY},
@@ -54,11 +57,15 @@ pub fn register<F: FnMut(String) + Send + 'static>(scheme: &str, handler: F) -> 
 
 pub fn listen<F: FnMut(String) + Send + 'static>(mut handler: F) -> Result<()> {
     std::thread::spawn(move || {
-        let listener =
-            LocalSocketListener::bind(ID.get().expect("listen() called before prepare()").as_str())
-                .expect("Can't create listener");
+        let name: Name<'_> = ID.get().expect("listen() called before prepare()").as_str()
+            .to_ns_name::<GenericNamespaced>()
+            .expect("Invalid name");
+        let listener = ListenerOptions::new()
+            .name(name)
+            .create_sync()
+            .expect("Can't create listener");
 
-        for conn in listener.incoming().filter_map(|c| {
+        for conn in listener.into_iter().filter_map(|c| {
             c.map_err(|error| log::error!("Incoming connection failed: {}", error))
                 .ok()
         }) {
@@ -79,30 +86,34 @@ pub fn listen<F: FnMut(String) + Send + 'static>(mut handler: F) -> Result<()> {
 
 pub fn prepare(identifier: &str) {
     let arg1 = std::env::args().nth(1).unwrap_or_default();
-    if let Ok(mut conn) = LocalSocketStream::connect(identifier) {
-        // We are the secondary instance.
-        // Prep to activate primary instance by allowing another process to take focus.
+    let name_result = identifier.to_ns_name::<GenericNamespaced>();
+    if let Ok(name) = name_result {
+        if let Ok(mut conn) = Stream::connect(name) {
+            // We are the secondary instance.
+            // Prep to activate primary instance by allowing another process to take focus.
 
-        // A workaround to allow AllowSetForegroundWindow to succeed - press a key.
-        // This was originally used by Chromium: https://bugs.chromium.org/p/chromium/issues/detail?id=837796
-        dummy_keypress();
+            // A workaround to allow AllowSetForegroundWindow to succeed - press a key.
+            // This was originally used by Chromium: https://bugs.chromium.org/p/chromium/issues/detail?id=837796
+            dummy_keypress();
 
-        let primary_instance_pid = conn.peer_pid().unwrap_or(ASFW_ANY);
-        unsafe {
-            let success = AllowSetForegroundWindow(primary_instance_pid) != 0;
-            if !success {
-                log::warn!("AllowSetForegroundWindow failed.");
+            // peer_pid is no longer available in interprocess v2, use ASFW_ANY instead
+            let primary_instance_pid = ASFW_ANY;
+            unsafe {
+                let success = AllowSetForegroundWindow(primary_instance_pid) != 0;
+                if !success {
+                    log::warn!("AllowSetForegroundWindow failed.");
+                }
             }
-        }
 
-        if let Err(io_err) = conn.write_all(arg1.as_bytes()) {
-            log::error!(
-                "Error sending message to primary instance: {}",
-                io_err.to_string()
-            );
+            if let Err(io_err) = conn.write_all(arg1.as_bytes()) {
+                log::error!(
+                    "Error sending message to primary instance: {}",
+                    io_err.to_string()
+                );
+            };
+            let _ = conn.write_all(b"\n");
         };
-        let _ = conn.write_all(b"\n");
-    };
+    }
     ID.set(identifier.to_string())
         .expect("prepare() called more than once with different identifiers.");
 }
