@@ -7,8 +7,8 @@ import { useTheme } from "../../states/theme";
 import { Log } from "../../utils/logger";
 
 interface NotificationTimer {
-  autoHide: NodeJS.Timeout | null;
-  slideDown: NodeJS.Timeout | null;
+  autoHide: ReturnType<typeof setTimeout> | null;
+  slideDown: ReturnType<typeof setTimeout> | null;
 }
 
 const NOTIFICATION_DISPLAY_TIME = 2000;

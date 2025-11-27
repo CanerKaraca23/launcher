@@ -53,7 +53,7 @@ const App = memo(() => {
   const { language } = useGenericPersistentState();
   const windowSize = useRef<PhysicalSize>();
   const mainWindowSize = useRef<LogicalSize>();
-  const processCheckInterval = useRef<NodeJS.Timeout>();
+  const processCheckInterval = useRef<ReturnType<typeof setInterval>>();
 
   const windowResizeListener = useCallback(
     throttle(async ({ payload }: { payload: PhysicalSize }) => {

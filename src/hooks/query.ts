@@ -7,7 +7,7 @@ const QUERY_INTERVAL_DELAY_MS = 1000;
 const QUERY_TIMES_TO_GET_INFO_THRESHOLD = 5;
 
 export const useQuery = () => {
-  const queryTimer = useRef<NodeJS.Timeout | null>(null);
+  const queryTimer = useRef<ReturnType<typeof setInterval> | null>(null);
   const { selected, setSelected } = useServers();
   const selectedServer = useRef<Server | undefined>(selected);
   const queryTimesToGetInfo = useRef<number>(0);
