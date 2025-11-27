@@ -1,8 +1,7 @@
 import { invoke, shell } from "@tauri-apps/api";
 import { open } from "@tauri-apps/api/dialog";
 import { t } from "i18next";
-import { TextInput, TouchableOpacity, View } from "react-native";
-import { createWebStyles } from "../../../utils/webStyles";
+import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import Text from "../../../components/Text";
 import { useAppState } from "../../../states/app";
 import { usePersistentServers } from "../../../states/servers";
@@ -126,6 +125,7 @@ const General = () => {
           value={gtasaPath}
           onChangeText={(text) => setGTASAPath(text)}
           style={[
+            // @ts-ignore - outlineStyle: "none" is valid for web but not in RN types
             styles.pathInput as any,
             {
               color: theme.textPrimary,
@@ -209,7 +209,8 @@ const General = () => {
   );
 };
 
-const styles = createWebStyles({
+// @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
+const styles = StyleSheet.create({
   pathInputContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -221,6 +222,7 @@ const styles = createWebStyles({
     flex: 1,
     height: sc(38),
     borderRadius: sc(5),
+    // @ts-ignore
     outlineStyle: "none",
     fontFamily: "Proxima Nova Regular",
     fontSize: sc(17),

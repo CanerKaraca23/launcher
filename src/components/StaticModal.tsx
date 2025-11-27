@@ -20,11 +20,12 @@ const StaticModal = (props: IProps) => {
       }}
     >
       <Pressable
+        // @ts-expect-error - cursor is valid for web but not in RN types
         style={{
           height: "100%",
           width: "100%",
           cursor: "default",
-        } as any}
+        }}
         onPress={() => props.onDismiss()}
       />
       {props.children}

@@ -1,6 +1,5 @@
 import { t } from "i18next";
-import { Pressable, TouchableOpacity, View } from "react-native";
-import { createWebStyles } from "../../../utils/webStyles";
+import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 import CheckBox from "../../../components/CheckBox";
 import Text from "../../../components/Text";
 import { useGenericPersistentState } from "../../../states/genericStates";
@@ -85,7 +84,8 @@ const Advanced = () => {
     </View>
   );
 };
-const styles = createWebStyles({
+// @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
+const styles = StyleSheet.create({
   pathInputContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -99,6 +99,7 @@ const styles = createWebStyles({
     height: 29,
     borderRadius: 8,
     borderWidth: 2,
+    // @ts-ignore
     outlineStyle: "none",
   },
   browseButton: {

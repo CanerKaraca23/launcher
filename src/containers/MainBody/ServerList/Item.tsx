@@ -108,6 +108,7 @@ const ServerItem = memo((props: IProps) => {
           style={[
             styles.pressableContainer,
             {
+              // @ts-ignore - cursor is valid for web but not in RN types
               cursor: isDragging ? "grabbing" : "default",
             } as any,
           ]}
@@ -125,8 +126,9 @@ const ServerItem = memo((props: IProps) => {
                 styles.iconContainer,
                 {
                   backgroundColor: statusInfo.backgroundColor,
+                  // @ts-ignore
                   userSelect: "none",
-                } as any,
+                },
               ]}
             >
               <Icon

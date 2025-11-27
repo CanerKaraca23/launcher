@@ -2,12 +2,12 @@ import { t } from "i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Image,
+  StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
   useWindowDimensions,
 } from "react-native";
-import { createWebStyles } from "../../utils/webStyles";
 import DropdownList from "../../components/DropdownList";
 import FeatureDisabledOverlay from "../../components/FeatureDisabledOverlay";
 import Icon from "../../components/Icon";
@@ -272,7 +272,8 @@ const JoinServerPrompt = () => {
               )}
               value={password}
               onChangeText={setPassword}
-              style={[styles.textInput as any, dynamicStyles.passwordInput]}
+              // @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
+              style={[styles.textInput, dynamicStyles.passwordInput]}
             />
           </View>
         )}
@@ -281,12 +282,13 @@ const JoinServerPrompt = () => {
             <Text semibold color={theme.textPrimary} size={2}>
               {t("nickname")}:
             </Text>
+            {/* @ts-ignore - outlineStyle: "none" is valid for web but not in RN types */}
             <TextInput
               placeholderTextColor={theme.textPlaceholder}
               placeholder={nickName}
               value={perServerNickname}
               onChangeText={handleNicknameChange}
-              style={[styles.textInput as any, dynamicStyles.nicknameInput as any]}
+              style={[styles.textInput, dynamicStyles.nicknameInput]}
             />
           </View>
           <TouchableOpacity
@@ -333,7 +335,8 @@ const JoinServerPrompt = () => {
   );
 };
 
-const styles = createWebStyles({
+// @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
+const styles = StyleSheet.create({
   container: {
     position: "absolute",
     borderRadius: sc(10),
@@ -407,6 +410,7 @@ const styles = createWebStyles({
     marginTop: sc(5),
     height: sc(38),
     borderRadius: sc(5),
+    // @ts-ignore
     outlineStyle: "none",
   },
   connectButton: {

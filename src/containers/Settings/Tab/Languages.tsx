@@ -1,5 +1,4 @@
-import { Pressable, ScrollView, View } from "react-native";
-import { createWebStyles } from "../../../utils/webStyles";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import RadioButton from "../../../components/RadioButton";
 import Text from "../../../components/Text";
 import { getLanguages } from "../../../locales";
@@ -67,7 +66,8 @@ const Appearance = () => {
   );
 };
 
-const styles = createWebStyles({
+// @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
+const styles = StyleSheet.create({
   pathInputContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -81,6 +81,7 @@ const styles = createWebStyles({
     height: 29,
     borderRadius: 8,
     borderWidth: 2,
+    // @ts-ignore
     outlineStyle: "none",
   },
   browseButton: {

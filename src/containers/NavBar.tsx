@@ -58,6 +58,7 @@ const NavBar = memo(() => {
         height: sc(35),
         paddingHorizontal: sc(5),
         borderRadius: sc(5),
+        // @ts-ignore
         outlineStyle: "none",
       },
     }),
@@ -92,7 +93,8 @@ const NavBar = memo(() => {
             onChangeText={handleNicknameChange}
             placeholder={`${t("nickname")}...`}
             placeholderTextColor={theme.textSecondary}
-            style={dynamicStyles.nicknameInput as any}
+            // @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
+            style={dynamicStyles.nicknameInput}
           />
         </View>
       </View>

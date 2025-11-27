@@ -2,11 +2,11 @@ import { t } from "i18next";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import {
   Pressable,
+  StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import { createWebStyles } from "../../../utils/webStyles";
 import Icon from "../../../components/Icon";
 import Text from "../../../components/Text";
 import { images } from "../../../constants/images";
@@ -204,7 +204,8 @@ const SearchBar = memo<SearchBarProps>(({ onChange }) => {
           placeholder={t("search_for_server_hostname_mode")}
           placeholderTextColor={theme.textSecondary}
           value={searchQuery}
-          style={[styles.textInput as any, { color: theme.textPrimary }]}
+          // @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
+          style={[styles.textInput, { color: theme.textPrimary }]}
           onChangeText={setSearchQuery}
         />
         {searchQuery.length > 0 && (
@@ -285,7 +286,8 @@ const SearchBar = memo<SearchBarProps>(({ onChange }) => {
   );
 });
 
-const styles = createWebStyles({
+// @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
+const styles = StyleSheet.create({
   searchContainer: {
     height: sc(60),
     flexDirection: "row",
@@ -330,6 +332,7 @@ const styles = createWebStyles({
     fontFamily: "Proxima Nova Regular",
     fontSize: sc(17),
     paddingHorizontal: 5,
+    // @ts-ignore
     outlineStyle: "none",
   },
   clearButton: {
