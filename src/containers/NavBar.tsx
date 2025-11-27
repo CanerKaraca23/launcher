@@ -93,6 +93,7 @@ const NavBar = memo(() => {
             onChangeText={handleNicknameChange}
             placeholder={`${t("nickname")}...`}
             placeholderTextColor={theme.textSecondary}
+            // @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
             style={dynamicStyles.nicknameInput}
           />
         </View>

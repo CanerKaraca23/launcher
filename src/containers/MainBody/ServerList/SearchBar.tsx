@@ -204,6 +204,7 @@ const SearchBar = memo<SearchBarProps>(({ onChange }) => {
           placeholder={t("search_for_server_hostname_mode")}
           placeholderTextColor={theme.textSecondary}
           value={searchQuery}
+          // @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
           style={[styles.textInput, { color: theme.textPrimary }]}
           onChangeText={setSearchQuery}
         />
@@ -285,6 +286,7 @@ const SearchBar = memo<SearchBarProps>(({ onChange }) => {
   );
 });
 
+// @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
 const styles = StyleSheet.create({
   searchContainer: {
     height: sc(60),

@@ -272,6 +272,7 @@ const JoinServerPrompt = () => {
               )}
               value={password}
               onChangeText={setPassword}
+              // @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
               style={[styles.textInput, dynamicStyles.passwordInput]}
             />
           </View>
@@ -281,12 +282,12 @@ const JoinServerPrompt = () => {
             <Text semibold color={theme.textPrimary} size={2}>
               {t("nickname")}:
             </Text>
+            {/* @ts-ignore - outlineStyle: "none" is valid for web but not in RN types */}
             <TextInput
               placeholderTextColor={theme.textPlaceholder}
               placeholder={nickName}
               value={perServerNickname}
               onChangeText={handleNicknameChange}
-              // @ts-ignore
               style={[styles.textInput, dynamicStyles.nicknameInput]}
             />
           </View>
@@ -334,6 +335,7 @@ const JoinServerPrompt = () => {
   );
 };
 
+// @ts-expect-error - outlineStyle: "none" is valid for web but not in RN types
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
