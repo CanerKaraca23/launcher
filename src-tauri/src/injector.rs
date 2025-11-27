@@ -18,7 +18,7 @@ pub async fn run_samp(
     _omp_file: &str,
     _password: &str,
     _discord: bool,
-) -> Result<()> {
+) -> crate::errors::Result<()> {
     Ok(())
 }
 

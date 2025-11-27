@@ -1,5 +1,5 @@
 import { emit, listen } from "@tauri-apps/api/event";
-import { appWindow } from "@tauri-apps/api/window";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { t } from "i18next";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -7,6 +7,8 @@ import { queryServer } from "../utils/query";
 import { stateStorage } from "../utils/stateStorage";
 import { PerServerSettings, SAMPDLLVersions, Server } from "../utils/types";
 import { useNotification } from "./notification";
+
+const appWindow = getCurrentWindow();
 
 interface ServersState {
   servers: Server[];

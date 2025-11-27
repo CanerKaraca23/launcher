@@ -1,7 +1,9 @@
-import { invoke } from "@tauri-apps/api";
-import { appWindow } from "@tauri-apps/api/window";
+import { invoke } from "@tauri-apps/api/core";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { t } from "i18next";
 import { memo, useCallback, useMemo } from "react";
+
+const appWindow = getCurrentWindow();
 import {
   ColorValue,
   Pressable,

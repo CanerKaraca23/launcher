@@ -27,7 +27,6 @@ use gumdrop::Options;
 use injector::run_samp;
 use log::{error, info, LevelFilter};
 use std::fs;
-use tauri::api::path::app_data_dir;
 use tauri::Manager;
 use tauri::PhysicalSize;
 
@@ -152,6 +151,12 @@ async fn handle_cli_args() -> Result<()> {
 
 async fn run_tauri_app() -> Result<()> {
     let builder_result = tauri::Builder::default()
+        .plugin(tauri_plugin_clipboard_manager::init())
+        .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_fs::init())
+        .plugin(tauri_plugin_os::init())
+        .plugin(tauri_plugin_process::init())
+        .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_upload::init())
         .setup(setup_tauri_app)
         .invoke_handler(tauri::generate_handler![
@@ -184,19 +189,17 @@ async fn run_tauri_app() -> Result<()> {
 }
 
 fn setup_tauri_app(app: &mut tauri::App) -> std::result::Result<(), Box<dyn std::error::Error>> {
-    let handle = app.handle();
+    let handle = app.handle().clone();
 
-    if let Some(main_window) = app.get_window("main") {
+    if let Some(main_window) = app.get_webview_window("main") {
         main_window.set_min_size(Some(PhysicalSize::new(WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT)))?;
     }
 
-    let config = handle.config();
-    if let Some(path) = app_data_dir(&config) {
-        fs::create_dir_all(&path).map_err(|e| {
-            error!("Failed to create app data directory: {}", e);
-            e
-        })?;
-    }
+    let path = handle.path().app_data_dir()?;
+    fs::create_dir_all(&path).map_err(|e| {
+        error!("Failed to create app data directory: {}", e);
+        e
+    })?;
 
     #[cfg(windows)]
     setup_deeplinks(handle.clone())?;
@@ -217,7 +220,7 @@ fn setup_deeplinks(
         if let Ok(mut uri_value) = URI_SCHEME_VALUE.lock() {
             *uri_value = request.clone();
         }
-        let _ = handle_omp.emit_all("scheme-request-received", &request);
+        let _ = handle_omp.emit("scheme-request-received", &request);
     })?;
 
     deeplink::register(DEEPLINK_SCHEME_SAMP, move |request| {
@@ -225,7 +228,7 @@ fn setup_deeplinks(
         if let Ok(mut uri_value) = URI_SCHEME_VALUE.lock() {
             *uri_value = request.clone();
         }
-        let _ = handle_samp.emit_all("scheme-request-received", &request);
+        let _ = handle_samp.emit("scheme-request-received", &request);
     })?;
 
     Ok(())

@@ -1,76 +1,16 @@
 {
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "omp-launcher",
+  "version": "1.5.2",
+  "identifier": "mp.open.launcher",
   "build": {
     "beforeDevCommand": "yarn dev",
     "beforeBuildCommand": "yarn build",
-    "devPath": "http://localhost:8050",
-    "distDir": "../dist",
-    "withGlobalTauri": false
+    "devUrl": "http://localhost:8050",
+    "frontendDist": "../dist"
   },
-  "package": {
-    "productName": "omp-launcher",
-    "version": "1.5.2"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "clipboard": {
-        "all": true
-      },
-      "path": {
-        "all": true
-      },
-      "window": {
-        "all": true
-      },
-      "dialog": {
-        "all": true
-      },
-      "os": {
-        "all": true
-      },
-      "fs": {
-        "all": true,
-        "scope": ["**", "**/*", "/**/*", "$HOME/.local/**"],
-        "exists": true
-      },
-      "shell": {
-        "all": false,
-        "open": true
-      },
-      "process": {
-        "all": true
-      }
-    },
-    "bundle": {
-      "active": true,
-      "targets": "all",
-      "identifier": "mp.open.launcher",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "windows": {
-        "allowDowngrades": true,
-        "certificateThumbprint": null,
-        "digestAlgorithm": null,
-        "nsis": {
-          "template": "./nsis/installer.nsi",
-          "installMode": "perMachine"
-        },
-        "signCommand": null,
-        "timestampUrl": null,
-        "tsp": false,
-        "webviewFixedRuntimePath": null,
-        "webviewInstallMode": {
-          "silent": false,
-          "type": "embedBootstrapper"
-        },
-        "wix": null
-      }
-    },
+  "app": {
+    "withGlobalTauri": false,
     "security": {
       "csp": null
     },
@@ -89,5 +29,41 @@
       }
     ],
     "macOSPrivateApi": true
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "allowDowngrades": true,
+      "nsis": {
+        "template": "./nsis/installer.nsi",
+        "installMode": "perMachine"
+      },
+      "webviewInstallMode": {
+        "silent": false,
+        "type": "embedBootstrapper"
+      }
+    }
+  },
+  "plugins": {
+    "clipboard-manager": {},
+    "dialog": {},
+    "fs": {
+      "scope": {
+        "allow": ["**", "**/*", "/**/*", "$HOME/.local/**"]
+      }
+    },
+    "os": {},
+    "process": {},
+    "shell": {
+      "open": true
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { OsType } from "@tauri-apps/api/os";
+import { OsType } from "@tauri-apps/plugin-os";
 import { create } from "zustand";
 import { VERSION } from "../constants/app";
 
