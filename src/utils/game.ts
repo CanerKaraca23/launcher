@@ -1,6 +1,9 @@
-import { fs, invoke, path, process, shell } from "@tauri-apps/api";
-import { open, save } from "@tauri-apps/api/dialog";
-import { exists, readTextFile, writeTextFile } from "@tauri-apps/api/fs";
+import { invoke } from "@tauri-apps/api/core";
+import * as path from "@tauri-apps/api/path";
+import { open, save } from "@tauri-apps/plugin-dialog";
+import { exists, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
+import { exit } from "@tauri-apps/plugin-process";
+import { open as shellOpen } from "@tauri-apps/plugin-shell";
 import { t } from "i18next";
 import {
   IN_GAME,
@@ -49,7 +52,7 @@ const isFileAvailableInGTASADir = async (file: ResourceInfo) => {
     file.path.replace("samp/shared/", ""),
     file.name
   );
-  return fs.exists(await path.join(gtasaPath, tempPath));
+  return exists(await path.join(gtasaPath, tempPath));
 };
 
 export const checkResourceFilesAvailability = async () => {
@@ -148,9 +151,8 @@ export const startGame = async (
             {
               title: t("run_as_admin"),
               onPress: () =>
-                shell
-                  .open("https://assets.open.mp/run_as_admin.gif")
-                  .then(() => process.exit()),
+                shellOpen("https://assets.open.mp/run_as_admin.gif")
+                  .then(() => exit()),
             },
             {
               title: t("cancel"),
@@ -188,7 +190,7 @@ export const startGame = async (
         {
           title: t("download"),
           onPress: () =>
-            shell.open(
+            shellOpen(
               "https://uifserver.net/download/sa-mp-0.3.7-R5-1-MP-install.exe"
             ),
         },
@@ -233,9 +235,8 @@ export const startGame = async (
             {
               title: t("run_as_admin"),
               onPress: () =>
-                shell
-                  .open("https://assets.open.mp/run_as_admin.gif")
-                  .then(() => process.exit()),
+                shellOpen("https://assets.open.mp/run_as_admin.gif")
+                  .then(() => exit()),
             },
             { title: t("cancel"), onPress: hideMessageBox },
           ],

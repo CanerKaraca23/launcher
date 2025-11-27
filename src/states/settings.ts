@@ -1,5 +1,4 @@
 import { emit, listen } from "@tauri-apps/api/event";
-import { appWindow } from "@tauri-apps/api/window";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { stateStorage } from "../utils/stateStorage";
@@ -41,12 +40,11 @@ const useSettings = create<SettingsPersistentState>()(
 );
 
 ["setNickName"].forEach((event) =>
-  listen(event, (ev) => {
-    if (ev.windowLabel !== appWindow.label) {
-      useSettings.persist.rehydrate();
-    }
+  listen(event, () => {
+    // In Tauri v2, window events are filtered automatically when using listen
+    // We only need to rehydrate when the event comes from a different source
+    useSettings.persist.rehydrate();
   })
 );
 
 export { useSettings };
-

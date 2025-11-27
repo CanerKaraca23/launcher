@@ -1,6 +1,7 @@
-import { invoke, shell } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api/core";
 import { getVersion } from "@tauri-apps/api/app";
-import { type } from "@tauri-apps/api/os";
+import { type as getOsType } from "@tauri-apps/plugin-os";
+import { open as shellOpen } from "@tauri-apps/plugin-shell";
 import { t } from "i18next";
 import { getUpdateInfo } from "../api/apis";
 import { useAppState } from "../states/app";
@@ -111,7 +112,7 @@ export const fetchServers = async (cached: boolean = true): Promise<void> => {
 
 export const fetchUpdateInfo = async () => {
   const nativeVer = await getVersion();
-  const hostOS = await type();
+  const hostOS = await getOsType();
   const response = await getUpdateInfo();
   if (response.data) {
     useAppState.getState().setUpdateInfo(response.data);
@@ -141,7 +142,7 @@ export const fetchUpdateInfo = async () => {
           {
             title: t("download"),
             onPress: () => {
-              shell.open(updateInfo.download);
+              shellOpen(updateInfo.download);
               hideMessageBox();
             },
           },

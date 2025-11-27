@@ -1,5 +1,6 @@
-import { invoke, shell } from "@tauri-apps/api";
-import { open } from "@tauri-apps/api/dialog";
+import { invoke } from "@tauri-apps/api/core";
+import { open as shellOpen } from "@tauri-apps/plugin-shell";
+import { open } from "@tauri-apps/plugin-dialog";
 import { t } from "i18next";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import Text from "../../../components/Text";
@@ -22,7 +23,7 @@ const General = () => {
   const selectPath = async () => {
     const selected: string = (await open({
       defaultPath:
-        hostOS === "Windows_NT" ? gtasaPath.replace(/\//g, "\\") : gtasaPath,
+        hostOS === "windows" ? gtasaPath.replace(/\//g, "\\") : gtasaPath,
       directory: true,
     })) as string;
 
@@ -197,7 +198,7 @@ const General = () => {
             style={{ marginBottom: sc(10) }}
             semibold
             size={2}
-            onPress={() => shell.open(updateInfo?.download)}
+            onPress={() => shellOpen(updateInfo?.download)}
             color={theme.primary}
           >
             {t("settings_new_update_available")}

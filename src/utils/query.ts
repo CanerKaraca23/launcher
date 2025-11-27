@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api/core";
 import { usePersistentServers, useServers } from "../states/servers";
 import { Log } from "./logger";
 import { ListType, Server } from "./types";

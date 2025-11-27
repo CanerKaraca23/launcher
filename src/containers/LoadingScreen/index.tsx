@@ -1,5 +1,6 @@
-import { fs, invoke, path } from "@tauri-apps/api";
-import { FileEntry } from "@tauri-apps/api/fs";
+import { invoke } from "@tauri-apps/api/core";
+import * as path from "@tauri-apps/api/path";
+import { exists, mkdir, readDir, remove } from "@tauri-apps/plugin-fs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { download } from "tauri-plugin-upload-api";
@@ -201,17 +202,6 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
     [resetDownloadState, updateDownloadProgress]
   );
 
-  const collectFiles = useCallback(
-    (parent: FileEntry, list: string[]): void => {
-      if (parent.children?.length) {
-        parent.children.forEach((file) => collectFiles(file, list));
-      } else {
-        list.push(parent.path);
-      }
-    },
-    []
-  );
-
   const validateFileChecksums = useCallback(
     async (checksums: string[]): Promise<boolean[]> => {
       const validationPromises: Promise<boolean>[] = [];
@@ -282,12 +272,12 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
         const ompFile = await path.join(ompFolder, "omp-client.dll");
 
         // Ensure OMP folder exists
-        if (!(await fs.exists(ompFolder))) {
-          await fs.createDir(ompFolder, { recursive: true });
+        if (!(await exists(ompFolder))) {
+          await mkdir(ompFolder, { recursive: true });
         }
 
         // Check if OMP file exists and is valid
-        if (await fs.exists(ompFile)) {
+        if (await exists(ompFile)) {
           const checksums: string[] = await invoke("get_checksum_of_files", {
             list: [ompFile],
           });
@@ -319,15 +309,19 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
         const dir = await path.appLocalDataDir();
         const sampPath = await path.join(dir, "samp");
 
-        if (!(await fs.exists(sampPath))) {
+        if (!(await exists(sampPath))) {
           Log.info("SAMP directory does not exist");
           await downloadSAMPFiles(sampPath);
           return;
         }
 
-        const files = await fs.readDir(sampPath, { recursive: true });
+        const files = await readDir(sampPath);
         const fileList: string[] = [];
-        files.forEach((file) => collectFiles(file, fileList));
+        for (const file of files) {
+          if (!file.isDirectory && file.name) {
+            fileList.push(`${sampPath}/${file.name}`);
+          }
+        }
 
         if (fileList.length === 0) {
           Log.info("No files found in SAMP directory");
@@ -345,8 +339,8 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
 
         if (validationResults.includes(false)) {
           Log.info("File validation failed, re-downloading SAMP files");
-          await fs.removeDir(sampPath, { recursive: true });
-          await fs.createDir(sampPath, { recursive: true });
+          await remove(sampPath, { recursive: true });
+          await mkdir(sampPath, { recursive: true });
           await downloadSAMPFiles(sampPath);
           return;
         }
@@ -368,7 +362,6 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
       }
     },
     [
-      collectFiles,
       validateFileChecksums,
       downloadSAMPFiles,
       processOmpPluginVerification,
@@ -382,16 +375,16 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
       const sampPath = await path.join(dir, "samp");
 
       // Check if SAMP directory exists
-      if (!(await fs.exists(sampPath))) {
+      if (!(await exists(sampPath))) {
         Log.info("Creating SAMP directory");
-        await fs.createDir(sampPath, { recursive: true });
+        await mkdir(sampPath, { recursive: true });
         await downloadSAMPFiles(sampPath);
         return;
       }
 
       // Check if archive exists and is valid
       const archive = await path.join(sampPath, "samp_clients.7z");
-      if (await fs.exists(archive)) {
+      if (await exists(archive)) {
         try {
           const checksums: string[] = await invoke("get_checksum_of_files", {
             list: [archive],

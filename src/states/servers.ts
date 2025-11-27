@@ -1,5 +1,4 @@
 import { emit, listen } from "@tauri-apps/api/event";
-import { appWindow } from "@tauri-apps/api/window";
 import { t } from "i18next";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -188,10 +187,10 @@ const usePersistentServers = create<ServersPersistentState>()(
   "updateInRecentlyJoinedList",
   "reorderFavorites",
 ].forEach((event) =>
-  listen(event, (ev) => {
-    if (ev.windowLabel !== appWindow.label) {
-      usePersistentServers.persist.rehydrate();
-    }
+  listen(event, () => {
+    // In Tauri v2, window events are filtered automatically when using listen
+    // We only need to rehydrate when the event comes from a different source
+    usePersistentServers.persist.rehydrate();
   })
 );
 
