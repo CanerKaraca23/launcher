@@ -27,9 +27,9 @@ use gumdrop::Options;
 use injector::run_samp;
 use log::{error, info, LevelFilter};
 use std::fs;
-use tauri::api::path::app_data_dir;
 use tauri::Manager;
 use tauri::PhysicalSize;
+use tauri::path::PathResolver;
 
 static URI_SCHEME_VALUE: Mutex<String> = Mutex::new(String::new());
 
@@ -153,6 +153,12 @@ async fn handle_cli_args() -> Result<()> {
 async fn run_tauri_app() -> Result<()> {
     let builder_result = tauri::Builder::default()
         .plugin(tauri_plugin_upload::init())
+        .plugin(tauri_plugin_clipboard_manager::init())
+        .plugin(tauri_plugin_fs::init())
+        .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_os::init())
+        .plugin(tauri_plugin_shell::init())
+        .plugin(tauri_plugin_process::init())
         .setup(setup_tauri_app)
         .invoke_handler(tauri::generate_handler![
             get_uri_scheme_value,
@@ -186,12 +192,11 @@ async fn run_tauri_app() -> Result<()> {
 fn setup_tauri_app(app: &mut tauri::App) -> std::result::Result<(), Box<dyn std::error::Error>> {
     let handle = app.handle();
 
-    if let Some(main_window) = app.get_window("main") {
+    if let Some(main_window) = app.get_webview_window("main") {
         main_window.set_min_size(Some(PhysicalSize::new(WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT)))?;
     }
 
-    let config = handle.config();
-    if let Some(path) = app_data_dir(&config) {
+    if let Ok(path) = handle.path().app_data_dir() {
         fs::create_dir_all(&path).map_err(|e| {
             error!("Failed to create app data directory: {}", e);
             e
@@ -201,7 +206,7 @@ fn setup_tauri_app(app: &mut tauri::App) -> std::result::Result<(), Box<dyn std:
     #[cfg(windows)]
     setup_deeplinks(handle.clone())?;
 
-    ipc::listen_for_ipc(handle);
+    ipc::listen_for_ipc(handle.clone());
     Ok(())
 }
 
