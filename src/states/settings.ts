@@ -1,9 +1,11 @@
 import { emit, listen } from "@tauri-apps/api/event";
-import { appWindow } from "@tauri-apps/api/window";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { stateStorage } from "../utils/stateStorage";
 import { SAMPDLLVersions } from "../utils/types";
+
+const appWindow = getCurrentWindow();
 
 interface SettingsPersistentState {
   nickName: string;

@@ -4,7 +4,7 @@ use std::io::BufRead;
 use std::net::{TcpListener, TcpStream};
 use std::sync::{Arc, Mutex};
 use std::thread;
-use tauri::{AppHandle, Manager, WindowBuilder, WindowUrl};
+use tauri::{AppHandle, Manager, WebviewUrl, WebviewWindowBuilder};
 
 use crate::constants::*;
 
@@ -17,10 +17,10 @@ fn create_overlay_window(
     label: &str,
     attached_id: i32,
 ) -> tauri::Result<()> {
-    match WindowBuilder::new(
+    match WebviewWindowBuilder::new(
         app,
         label,
-        WindowUrl::App(format!("index.html?attached_id={}", attached_id).into()),
+        WebviewUrl::App(format!("index.html?attached_id={}", attached_id).into()),
     )
     .transparent(true)
     .decorations(false)
@@ -90,12 +90,7 @@ pub fn listen_for_ipc(app_handle: AppHandle) {
                                         parts[4].parse::<i32>(),
                                     ) {
                                         let window_label = format!("omp_overlay_window:{}", pid);
-                                        if let Some(win) = handle.get_window(&window_label) {
-                                            // let _ = win.set_position(tauri::PhysicalPosition {
-                                            //     x: -1 * w - 1000,
-                                            //     y: -1 * h - 1000,
-                                            // });
-
+                                        if let Some(win) = handle.get_webview_window(&window_label) {
                                             let _ = win.set_size(tauri::PhysicalSize {
                                                 width: w as u32,
                                                 height: h as u32,
@@ -116,7 +111,7 @@ pub fn listen_for_ipc(app_handle: AppHandle) {
                             let parts: Vec<_> = line.trim().split(':').collect();
                             if parts.len() >= 2 {
                                 let window_label = format!("omp_overlay_window:{}", parts[1]);
-                                if let Some(window) = handle.get_window(&window_label) {
+                                if let Some(window) = handle.get_webview_window(&window_label) {
                                     let _ = window.close();
                                 } else {
                                     log::warn!("IPC overlay window not found: {}", window_label);

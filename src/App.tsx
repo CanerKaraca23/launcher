@@ -1,10 +1,10 @@
-import { invoke } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api/core";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import {
-  appWindow,
   LogicalPosition,
   LogicalSize,
   type PhysicalSize,
-} from "@tauri-apps/api/window";
+} from "@tauri-apps/api/dpi";
 import {
   lazy,
   memo,
@@ -45,6 +45,8 @@ const MessageBox = lazy(() => import("./containers/MessageBox"));
 const Notification = lazy(() => import("./containers/Notification"));
 const ContextMenu = lazy(() => import("./containers/ServerContextMenu"));
 const SettingsModal = lazy(() => import("./containers/Settings"));
+
+const appWindow = getCurrentWindow();
 
 const App = memo(() => {
   const [loading, setLoading] = useState(!IN_GAME);
