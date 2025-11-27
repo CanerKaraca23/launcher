@@ -31,7 +31,7 @@ const AddThirdPartyServerModal = () => {
 
   useEffect(() => {
     if (visible) {
-      readText().then((text: string | null) => {
+      readText().then((text) => {
         if (text) {
           setServerAddress(text);
         }

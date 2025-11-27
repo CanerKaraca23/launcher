@@ -315,13 +315,25 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
           return;
         }
 
-        const files = await readDir(sampPath);
-        const fileList: string[] = [];
-        for (const file of files) {
-          if (!file.isDirectory && file.name) {
-            fileList.push(`${sampPath}/${file.name}`);
+        // Recursive function to collect all files from a directory
+        const collectAllFiles = async (dirPath: string): Promise<string[]> => {
+          const entries = await readDir(dirPath);
+          const files: string[] = [];
+          for (const entry of entries) {
+            if (entry.name) {
+              const fullPath = `${dirPath}/${entry.name}`;
+              if (entry.isDirectory) {
+                const subFiles = await collectAllFiles(fullPath);
+                files.push(...subFiles);
+              } else {
+                files.push(fullPath);
+              }
+            }
           }
-        }
+          return files;
+        };
+
+        const fileList = await collectAllFiles(sampPath);
 
         if (fileList.length === 0) {
           Log.info("No files found in SAMP directory");
