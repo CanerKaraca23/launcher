@@ -98,8 +98,7 @@ const styles = StyleSheet.create({
     height: 29,
     borderRadius: 8,
     borderWidth: 2,
-    // @ts-ignore
-    outlineStyle: "none",
+    outlineStyle: "none" as any,
   },
   browseButton: {
     height: 30,

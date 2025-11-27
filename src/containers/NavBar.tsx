@@ -58,8 +58,7 @@ const NavBar = memo(() => {
         height: sc(35),
         paddingHorizontal: sc(5),
         borderRadius: sc(5),
-        // @ts-ignore
-        outlineStyle: "none",
+        outlineStyle: "none" as any,
       },
     }),
     [theme]
