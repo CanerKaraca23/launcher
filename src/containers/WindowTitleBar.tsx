@@ -1,5 +1,5 @@
-import { invoke } from "@tauri-apps/api";
-import { appWindow } from "@tauri-apps/api/window";
+import { invoke } from "@tauri-apps/api/core";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { t } from "i18next";
 import { memo, useCallback, useMemo } from "react";
 import {
@@ -131,6 +131,7 @@ const CustomWindowTitleBarButtons = memo<CustomButtonProps>(
 const WindowTitleBar = memo(() => {
   const { theme, themeType, setTheme } = useTheme();
   const { show: showSettings } = useSettingsModal();
+  const appWindow = getCurrentWindow();
 
   const containerStyles = useMemo(
     () => ({

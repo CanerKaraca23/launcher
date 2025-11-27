@@ -1,5 +1,5 @@
 import { emit, listen } from "@tauri-apps/api/event";
-import { appWindow } from "@tauri-apps/api/window";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { stateStorage } from "../utils/stateStorage";
@@ -40,6 +40,7 @@ const useSettings = create<SettingsPersistentState>()(
   )
 );
 
+const appWindow = getCurrentWindow();
 ["setNickName"].forEach((event) =>
   listen(event, (ev) => {
     if (ev.windowLabel !== appWindow.label) {

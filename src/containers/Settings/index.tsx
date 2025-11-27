@@ -1,4 +1,4 @@
-import { shell } from "@tauri-apps/api";
+import { open } from "@tauri-apps/plugin-shell";
 import { t } from "i18next";
 import { useCallback, useMemo, useState } from "react";
 import {
@@ -63,11 +63,11 @@ const SettingsModal = () => {
   }, [hide]);
 
   const handleOpenMpPress = useCallback(() => {
-    shell.open("https://open.mp/");
+    open("https://open.mp/");
   }, []);
 
   const handleGithubPress = useCallback(() => {
-    shell.open("https://github.com/openmultiplayer/launcher/");
+    open("https://github.com/openmultiplayer/launcher/");
   }, []);
 
   if (!visible) {

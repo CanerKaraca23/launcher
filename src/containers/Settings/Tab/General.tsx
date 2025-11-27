@@ -1,5 +1,6 @@
-import { invoke, shell } from "@tauri-apps/api";
-import { open } from "@tauri-apps/api/dialog";
+import { invoke } from "@tauri-apps/api/core";
+import { open as openDialog } from "@tauri-apps/plugin-dialog";
+import { open as openUrl } from "@tauri-apps/plugin-shell";
 import { t } from "i18next";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import Text from "../../../components/Text";
@@ -20,11 +21,11 @@ const General = () => {
   const { updateInfo, version } = useAppState();
 
   const selectPath = async () => {
-    const selected: string = (await open({
+    const selected: string | null = await openDialog({
       defaultPath:
-        hostOS === "Windows_NT" ? gtasaPath.replace(/\//g, "\\") : gtasaPath,
+        hostOS === "windows" ? gtasaPath.replace(/\//g, "\\") : gtasaPath,
       directory: true,
-    })) as string;
+    });
 
     if (selected) {
       const newPath = selected.replace(/\\/g, "/");
@@ -197,7 +198,7 @@ const General = () => {
             style={{ marginBottom: sc(10) }}
             semibold
             size={2}
-            onPress={() => shell.open(updateInfo?.download)}
+            onPress={() => openUrl(updateInfo?.download)}
             color={theme.primary}
           >
             {t("settings_new_update_available")}

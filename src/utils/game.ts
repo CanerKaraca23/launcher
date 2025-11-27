@@ -1,6 +1,9 @@
-import { fs, invoke, path, process, shell } from "@tauri-apps/api";
-import { open, save } from "@tauri-apps/api/dialog";
-import { exists, readTextFile, writeTextFile } from "@tauri-apps/api/fs";
+import { invoke } from "@tauri-apps/api/core";
+import { open, save } from "@tauri-apps/plugin-dialog";
+import { exists, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
+import * as path from "@tauri-apps/api/path";
+import * as process from "@tauri-apps/plugin-process";
+import * as shell from "@tauri-apps/plugin-shell";
 import { t } from "i18next";
 import {
   IN_GAME,
@@ -49,7 +52,7 @@ const isFileAvailableInGTASADir = async (file: ResourceInfo) => {
     file.path.replace("samp/shared/", ""),
     file.name
   );
-  return fs.exists(await path.join(gtasaPath, tempPath));
+  return exists(await path.join(gtasaPath, tempPath));
 };
 
 export const checkResourceFilesAvailability = async () => {
@@ -150,7 +153,7 @@ export const startGame = async (
               onPress: () =>
                 shell
                   .open("https://assets.open.mp/run_as_admin.gif")
-                  .then(() => process.exit()),
+                  .then(() => process.exit(0)),
             },
             {
               title: t("cancel"),
@@ -235,7 +238,7 @@ export const startGame = async (
               onPress: () =>
                 shell
                   .open("https://assets.open.mp/run_as_admin.gif")
-                  .then(() => process.exit()),
+                  .then(() => process.exit(0)),
             },
             { title: t("cancel"), onPress: hideMessageBox },
           ],

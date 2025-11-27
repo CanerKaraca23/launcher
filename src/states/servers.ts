@@ -1,5 +1,5 @@
 import { emit, listen } from "@tauri-apps/api/event";
-import { appWindow } from "@tauri-apps/api/window";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { t } from "i18next";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -180,6 +180,7 @@ const usePersistentServers = create<ServersPersistentState>()(
   )
 );
 
+const appWindow = getCurrentWindow();
 [
   "updateInFavoritesList",
   "addToFavorites",

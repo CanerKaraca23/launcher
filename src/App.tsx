@@ -1,6 +1,6 @@
-import { invoke } from "@tauri-apps/api";
+import { invoke } from "@tauri-apps/api/core";
 import {
-  appWindow,
+  getCurrentWindow,
   LogicalPosition,
   LogicalSize,
   type PhysicalSize,
@@ -54,6 +54,7 @@ const App = memo(() => {
   const windowSize = useRef<PhysicalSize>();
   const mainWindowSize = useRef<LogicalSize>();
   const processCheckInterval = useRef<NodeJS.Timeout>();
+  const appWindow = getCurrentWindow();
 
   const windowResizeListener = useCallback(
     throttle(async ({ payload }: { payload: PhysicalSize }) => {

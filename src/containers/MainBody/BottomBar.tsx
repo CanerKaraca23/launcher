@@ -1,5 +1,5 @@
 import { Clipboard } from "@react-native-clipboard/clipboard/dist/Clipboard.web";
-import { shell } from "@tauri-apps/api";
+import { open } from "@tauri-apps/plugin-shell";
 import { t } from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -142,7 +142,7 @@ const BottomBar = () => {
           {discordInvite.length ? (
             <TouchableOpacity
               style={[styles.actionButton, { backgroundColor: "#5865F2" }]}
-              onPress={() => shell.open(discordInvite)}
+              onPress={() => open(discordInvite)}
             >
               <Icon
                 svg
