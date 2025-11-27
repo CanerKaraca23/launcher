@@ -5,12 +5,12 @@ description = "Open Multiplayer Launcher"
 authors = ["Amyr Ahmady (iAmir)"]
 license = ""
 repository = "https://github.com/openmultiplayer/launcher"
-edition = "2021"
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1", features = [] }
+tauri-build = { version = "2", features = [] }
 
 [dependencies]
 tauri = { version = "1.8.3", features = [ "clipboard-all", "fs-all", "path-all", "macos-private-api", "process-all", "window-all", "dialog-all", "os-all", "shell-open"] }
