@@ -30,13 +30,25 @@ jobs:
       - name: Install rust i686-pc-windows-msvc target
         run: rustup target add i686-pc-windows-msvc
 
-      - name: Setup NSIS plugin
+      - name: Setup NSIS with plugin
         shell: powershell
         run: |
-          $nsis_plugins = "C:\Program Files (x86)\NSIS\Plugins\x86-ansi"
-          New-Item -ItemType Directory -Path $nsis_plugins -Force | Out-Null
+          # Install NSIS via Chocolatey
+          choco install nsis -y
+          
+          # Create plugin directories
+          $nsisPluginsAnsi = "C:\Program Files (x86)\NSIS\Plugins\x86-ansi"
+          $nsisPluginsUnicode = "C:\Program Files (x86)\NSIS\Plugins\x86-unicode"
+          New-Item -ItemType Directory -Path $nsisPluginsAnsi -Force | Out-Null
+          New-Item -ItemType Directory -Path $nsisPluginsUnicode -Force | Out-Null
+          
+          # Download the plugin
           $url = "https://github.com/tauri-apps/nsis-tauri-utils/releases/download/nsis_tauri_utils-v0.5.2/nsis_tauri_utils.dll"
-          Invoke-WebRequest -Uri $url -OutFile "$nsis_plugins\nsis_tauri_utils.dll" -UseBasicParsing
+          Invoke-WebRequest -Uri $url -OutFile "$nsisPluginsAnsi\nsis_tauri_utils.dll" -UseBasicParsing
+          Invoke-WebRequest -Uri $url -OutFile "$nsisPluginsUnicode\nsis_tauri_utils.dll" -UseBasicParsing
+          
+          # Set environment variable to use system NSIS
+          echo "TAURI_NSIS_PATH=C:\Program Files (x86)\NSIS" >> $env:GITHUB_ENV
 
       - name: Build project
         run: yarn release
