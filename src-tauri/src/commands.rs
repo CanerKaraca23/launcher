@@ -102,8 +102,16 @@ pub fn is_process_alive(pid: u32) -> bool {
 
 #[cfg(not(target_os = "windows"))]
 #[tauri::command]
-pub fn is_process_alive(_pid: u32) -> bool {
-    false
+pub fn is_process_alive(pid: u32) -> bool {
+    // On Unix-like systems, we can check if a process exists using kill with signal 0
+    use std::process::Command;
+    
+    // Try to send signal 0 to the process (just checks if process exists)
+    Command::new("kill")
+        .args(["-0", &pid.to_string()])
+        .output()
+        .map(|output| output.status.success())
+        .unwrap_or(false)
 }
 
 #[tauri::command]
