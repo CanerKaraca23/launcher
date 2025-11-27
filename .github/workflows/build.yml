@@ -36,34 +36,40 @@ jobs:
           # Build frontend first
           yarn build
           
-          # Pre-create Tauri's NSIS directories where it will look for the plugin
-          # Tauri downloads to %LOCALAPPDATA%\tauri\NSIS\
+          # Pre-create Tauri's NSIS cache directories and install plugin
           $tauriCacheDir = "$env:LOCALAPPDATA\tauri"
           $nsisDir = "$tauriCacheDir\NSIS"
           $nsis3Dir = "$nsisDir\nsis-3.09"
           
-          # Create the Plugins directory structure that NSIS expects
+          # Create the Plugins directory structure for NSIS
           $pluginsAnsi = "$nsis3Dir\Plugins\x86-ansi"
           $pluginsUnicode = "$nsis3Dir\Plugins\x86-unicode"
           
           New-Item -ItemType Directory -Path $pluginsAnsi -Force | Out-Null
           New-Item -ItemType Directory -Path $pluginsUnicode -Force | Out-Null
           
-          # Copy the plugin DLL to both plugin directories
+          # Copy the plugin DLL to NSIS plugin directories
           Copy-Item "src-tauri\nsis\nsis_tauri_utils.dll" "$pluginsAnsi\nsis_tauri_utils.dll" -Force
           Copy-Item "src-tauri\nsis\nsis_tauri_utils.dll" "$pluginsUnicode\nsis_tauri_utils.dll" -Force
           
-          # Also create the plugin download cache location so Tauri doesn't re-download
+          # Also create the plugin download cache to prevent re-download
           $pluginCacheDir = "$nsisDir\nsis_tauri_utils-v0.5.2"
           New-Item -ItemType Directory -Path $pluginCacheDir -Force | Out-Null
           Copy-Item "src-tauri\nsis\nsis_tauri_utils.dll" "$pluginCacheDir\nsis_tauri_utils.dll" -Force
+          
+          # Pre-create the Tauri build output NSIS directory and copy plugin there
+          # This is where NSIS looks for plugins during the actual installer compilation
+          $buildOutputNsisDir = "src-tauri\target\i686-pc-windows-msvc\release\nsis\x86"
+          New-Item -ItemType Directory -Path $buildOutputNsisDir -Force | Out-Null
+          Copy-Item "src-tauri\nsis\nsis_tauri_utils.dll" "$buildOutputNsisDir\nsis_tauri_utils.dll" -Force
           
           Write-Host "Plugin installed to:"
           Write-Host "  $pluginsAnsi"
           Write-Host "  $pluginsUnicode"
           Write-Host "  $pluginCacheDir"
+          Write-Host "  $buildOutputNsisDir"
           
-          # Now run Tauri build
+          # Run Tauri build
           yarn tauri build -t i686-pc-windows-msvc
 
       - name: Generate artifact name
