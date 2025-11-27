@@ -1,5 +1,4 @@
 import { emit, listen } from "@tauri-apps/api/event";
-import { getCurrentWindow } from "@tauri-apps/api/window";
 import { t } from "i18next";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -7,8 +6,6 @@ import { queryServer } from "../utils/query";
 import { stateStorage } from "../utils/stateStorage";
 import { PerServerSettings, SAMPDLLVersions, Server } from "../utils/types";
 import { useNotification } from "./notification";
-
-const appWindow = getCurrentWindow();
 
 interface ServersState {
   servers: Server[];
@@ -182,6 +179,7 @@ const usePersistentServers = create<ServersPersistentState>()(
   )
 );
 
+// In Tauri v2, cross-window event sync: listen for changes and rehydrate
 [
   "updateInFavoritesList",
   "addToFavorites",
@@ -190,10 +188,8 @@ const usePersistentServers = create<ServersPersistentState>()(
   "updateInRecentlyJoinedList",
   "reorderFavorites",
 ].forEach((event) =>
-  listen(event, (ev) => {
-    if (ev.windowLabel !== appWindow.label) {
-      usePersistentServers.persist.rehydrate();
-    }
+  listen(event, () => {
+    usePersistentServers.persist.rehydrate();
   })
 );
 

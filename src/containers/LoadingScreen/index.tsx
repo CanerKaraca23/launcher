@@ -4,7 +4,7 @@ import { exists, readDir, mkdir, remove } from "@tauri-apps/plugin-fs";
 import type { DirEntry } from "@tauri-apps/plugin-fs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { upload } from "@tauri-apps/plugin-upload";
+import { download } from "@tauri-apps/plugin-upload";
 import { getUpdateInfo } from "../../api/apis";
 import Icon from "../../components/Icon";
 import Text from "../../components/Text";
@@ -120,36 +120,38 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
         abortController.current = new AbortController();
 
         await new Promise<void>((resolve, reject) => {
-          upload(
+          download(
             "https://assets.open.mp/samp_clients.7z",
             archive,
-            async (progress, total) => {
+            (payload) => {
               if (abortController.current?.signal.aborted) {
                 reject(new Error("Download aborted"));
                 return;
               }
 
-              updateDownloadProgress(progress, total);
+              updateDownloadProgress(payload.progress, payload.total);
 
-              if (downloadedSize.current >= total) {
-                try {
-                  setLoadingStage(LoadingStage.EXTRACTING);
-                  setCurrentTask("Extracting files...");
+              if (payload.progress >= payload.total && payload.total > 0) {
+                (async () => {
+                  try {
+                    setLoadingStage(LoadingStage.EXTRACTING);
+                    setCurrentTask("Extracting files...");
 
-                  await invoke("extract_7z", {
-                    path: archive,
-                    outputPath: sampPath,
-                  });
+                    await invoke("extract_7z", {
+                      path: archive,
+                      outputPath: sampPath,
+                    });
 
-                  resetDownloadState();
-                  resolve();
-                } catch (extractError) {
-                  Log.error("Extraction failed:", extractError);
-                  reject(extractError);
-                }
+                    resetDownloadState();
+                    resolve();
+                  } catch (extractError) {
+                    Log.error("Extraction failed:", extractError);
+                    reject(extractError);
+                  }
+                })();
               }
             }
-          );
+          ).catch(reject);
         });
 
         await processFileChecksums(false);
@@ -174,19 +176,19 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
         abortController.current = new AbortController();
 
         await new Promise<void>((resolve, reject) => {
-          upload(link, ompFile, async (progress, total) => {
+          download(link, ompFile, (payload) => {
             if (abortController.current?.signal.aborted) {
               reject(new Error("Download aborted"));
               return;
             }
 
-            updateDownloadProgress(progress, total);
+            updateDownloadProgress(payload.progress, payload.total);
 
-            if (downloadedSize.current >= total) {
+            if (payload.progress >= payload.total && payload.total > 0) {
               resetDownloadState();
               resolve();
             }
-          });
+          }).catch(reject);
         });
 
         // Small delay to ensure file is fully written

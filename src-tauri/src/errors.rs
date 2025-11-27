@@ -1,10 +1,11 @@
+use serde::Serialize;
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub enum LauncherError {
-    Io(std::io::Error),
-    SerdeJson(serde_json::Error),
-    SystemTime(std::time::SystemTimeError),
+    Io(String),
+    SerdeJson(String),
+    SystemTime(String),
     Parse(String),
     Network(String),
     Process(String),
@@ -48,20 +49,20 @@ impl From<std::io::Error> for LauncherError {
         match err.raw_os_error() {
             Some(5) => LauncherError::AccessDenied("Access denied".to_string()),
             Some(740) => LauncherError::AccessDenied("Admin privileges required".to_string()),
-            _ => LauncherError::Io(err),
+            _ => LauncherError::Io(err.to_string()),
         }
     }
 }
 
 impl From<serde_json::Error> for LauncherError {
     fn from(err: serde_json::Error) -> Self {
-        LauncherError::SerdeJson(err)
+        LauncherError::SerdeJson(err.to_string())
     }
 }
 
 impl From<std::time::SystemTimeError> for LauncherError {
     fn from(err: std::time::SystemTimeError) -> Self {
-        LauncherError::SystemTime(err)
+        LauncherError::SystemTime(err.to_string())
     }
 }
 
@@ -81,9 +82,3 @@ impl From<LauncherError> for String {
 }
 
 pub type Result<T> = std::result::Result<T, LauncherError>;
-
-impl From<LauncherError> for tauri::InvokeError {
-    fn from(err: LauncherError) -> Self {
-        tauri::InvokeError::from(err.to_string())
-    }
-}

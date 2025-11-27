@@ -262,7 +262,7 @@ impl Query {
             .map_err(|e| LauncherError::Parse(format!("Failed to read language: {}", e)))?;
         data.language = helpers::decode_buffer(language_buf).0;
 
-        serde_json::to_string(&data).map_err(|e| LauncherError::SerdeJson(e).into())
+        serde_json::to_string(&data).map_err(|e| LauncherError::SerdeJson(e.to_string()).into())
     }
 
     fn build_extra_info_packet(&self, mut packet: Cursor<Vec<u8>>) -> Result<String> {
@@ -328,7 +328,7 @@ impl Query {
             }
         }
 
-        serde_json::to_string(&data).map_err(|e| LauncherError::SerdeJson(e).into())
+        serde_json::to_string(&data).map_err(|e| LauncherError::SerdeJson(e.to_string()).into())
     }
 
     fn build_players_packet(&self, mut packet: Cursor<Vec<u8>>) -> Result<String> {
@@ -369,7 +369,7 @@ impl Query {
             })?;
         }
 
-        serde_json::to_string(&players).map_err(|e| LauncherError::SerdeJson(e).into())
+        serde_json::to_string(&players).map_err(|e| LauncherError::SerdeJson(e.to_string()).into())
     }
 
     fn build_rules_packet(&self, mut packet: Cursor<Vec<u8>>) -> Result<String> {
@@ -417,7 +417,7 @@ impl Query {
             rules.push(rule);
         }
 
-        serde_json::to_string(&rules).map_err(|e| LauncherError::SerdeJson(e).into())
+        serde_json::to_string(&rules).map_err(|e| LauncherError::SerdeJson(e.to_string()).into())
     }
 }
 

@@ -27,9 +27,9 @@ use gumdrop::Options;
 use injector::run_samp;
 use log::{error, info, LevelFilter};
 use std::fs;
+use tauri::Emitter;
 use tauri::Manager;
 use tauri::PhysicalSize;
-use tauri::Emitter;
 
 static URI_SCHEME_VALUE: Mutex<String> = Mutex::new(String::new());
 

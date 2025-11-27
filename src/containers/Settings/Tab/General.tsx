@@ -23,7 +23,7 @@ const General = () => {
   const selectPath = async () => {
     const selected: string = (await open({
       defaultPath:
-        hostOS === "Windows_NT" ? gtasaPath.replace(/\//g, "\\") : gtasaPath,
+        hostOS === "windows" ? gtasaPath.replace(/\//g, "\\") : gtasaPath,
       directory: true,
     })) as string;
 
