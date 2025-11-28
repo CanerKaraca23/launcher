@@ -34,7 +34,7 @@ ${StrLoc}
 !define OUTFILE "nsis-output.exe"
 !define ARCH "x86"
 !ifndef PLUGINSPATH
-  !define PLUGINSPATH ""
+  !define PLUGINSPATH "${__FILEDIR__}"
 !endif
 !define ALLOWDOWNGRADES "true"
 !define DISPLAYLANGUAGESELECTOR "false"
