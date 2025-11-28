@@ -58,11 +58,5 @@
       "wix": null
     }
   },
-  "plugins": {
-    "fs": {
-      "scope": {
-        "allow": ["**", "**/*", "/**/*", "$HOME/.local/**", "$APPLOCALDATA/**", "$APPDATA/**"]
-      }
-    }
-  }
+  "plugins": {}
 }
