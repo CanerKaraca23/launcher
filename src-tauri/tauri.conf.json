@@ -32,7 +32,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": "all",
+    "targets": ["msi"],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -40,10 +40,6 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "resources": {
-      "extra/d3dx9_25.dll": "extra/d3dx9_25.dll",
-      "extra/MicrosoftEdgeWebview2Setup.exe": "extra/MicrosoftEdgeWebview2Setup.exe"
-    },
     "windows": {
       "allowDowngrades": true,
       "certificateThumbprint": null,

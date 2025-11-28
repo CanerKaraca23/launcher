@@ -31,13 +31,7 @@ jobs:
         run: rustup target add i686-pc-windows-msvc
 
       - name: Build project
-        shell: powershell
-        run: |
-          # Build frontend first
-          yarn build
-          
-          # Run Tauri build
-          yarn tauri build -t i686-pc-windows-msvc
+        run: yarn release
 
       - name: Generate artifact name
         id: vars
