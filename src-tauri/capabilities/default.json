@@ -41,6 +41,17 @@
     "fs:allow-remove",
     "fs:allow-rename",
     "fs:allow-copy-file",
+    {
+      "identifier": "fs:scope",
+      "allow": [
+        "$APPDATA/**",
+        "$APPLOCALDATA/**",
+        "$HOME/**",
+        "$DOCUMENT/**",
+        "$DOWNLOAD/**",
+        "$TEMP/**"
+      ]
+    },
     "dialog:default",
     "dialog:allow-open",
     "dialog:allow-save",
