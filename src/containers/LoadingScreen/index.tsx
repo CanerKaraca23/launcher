@@ -1,8 +1,10 @@
-import { fs, invoke, path } from "@tauri-apps/api";
-import { FileEntry } from "@tauri-apps/api/fs";
+import { invoke } from "@tauri-apps/api/core";
+import { join, appLocalDataDir } from "@tauri-apps/api/path";
+import { exists, readDir, mkdir, remove } from "@tauri-apps/plugin-fs";
+import type { DirEntry } from "@tauri-apps/plugin-fs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { download } from "tauri-plugin-upload-api";
+import { download } from "@tauri-apps/plugin-upload";
 import { getUpdateInfo } from "../../api/apis";
 import Icon from "../../components/Icon";
 import Text from "../../components/Text";
@@ -108,7 +110,7 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
 
   const downloadSAMPFiles = useCallback(
     async (sampPath: string) => {
-      const archive = await path.join(sampPath, "samp_clients.7z");
+      const archive = await join(sampPath, "samp_clients.7z");
 
       try {
         setLoadingStage(LoadingStage.DOWNLOADING_SAMP);
@@ -121,33 +123,35 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
           download(
             "https://assets.open.mp/samp_clients.7z",
             archive,
-            async (progress, total) => {
+            (payload) => {
               if (abortController.current?.signal.aborted) {
                 reject(new Error("Download aborted"));
                 return;
               }
 
-              updateDownloadProgress(progress, total);
+              updateDownloadProgress(payload.progress, payload.total);
 
-              if (downloadedSize.current >= total) {
-                try {
-                  setLoadingStage(LoadingStage.EXTRACTING);
-                  setCurrentTask("Extracting files...");
+              if (payload.progress >= payload.total && payload.total > 0) {
+                (async () => {
+                  try {
+                    setLoadingStage(LoadingStage.EXTRACTING);
+                    setCurrentTask("Extracting files...");
 
-                  await invoke("extract_7z", {
-                    path: archive,
-                    outputPath: sampPath,
-                  });
+                    await invoke("extract_7z", {
+                      path: archive,
+                      outputPath: sampPath,
+                    });
 
-                  resetDownloadState();
-                  resolve();
-                } catch (extractError) {
-                  Log.error("Extraction failed:", extractError);
-                  reject(extractError);
-                }
+                    resetDownloadState();
+                    resolve();
+                  } catch (extractError) {
+                    Log.error("Extraction failed:", extractError);
+                    reject(extractError);
+                  }
+                })();
               }
             }
-          );
+          ).catch(reject);
         });
 
         await processFileChecksums(false);
@@ -172,19 +176,19 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
         abortController.current = new AbortController();
 
         await new Promise<void>((resolve, reject) => {
-          download(link, ompFile, async (progress, total) => {
+          download(link, ompFile, (payload) => {
             if (abortController.current?.signal.aborted) {
               reject(new Error("Download aborted"));
               return;
             }
 
-            updateDownloadProgress(progress, total);
+            updateDownloadProgress(payload.progress, payload.total);
 
-            if (downloadedSize.current >= total) {
+            if (payload.progress >= payload.total && payload.total > 0) {
               resetDownloadState();
               resolve();
             }
-          });
+          }).catch(reject);
         });
 
         // Small delay to ensure file is fully written
@@ -202,11 +206,15 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
   );
 
   const collectFiles = useCallback(
-    (parent: FileEntry, list: string[]): void => {
-      if (parent.children?.length) {
-        parent.children.forEach((file) => collectFiles(file, list));
-      } else {
-        list.push(parent.path);
+    async (basePath: string, entries: DirEntry[], list: string[]): Promise<void> => {
+      for (const entry of entries) {
+        const entryPath = await join(basePath, entry.name);
+        if (entry.isDirectory) {
+          const subEntries = await readDir(entryPath);
+          await collectFiles(entryPath, subEntries, list);
+        } else {
+          list.push(entryPath);
+        }
       }
     },
     []
@@ -220,7 +228,7 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
       for (const [_, resourceInfo] of validFileChecksums.entries()) {
         const validationPromise = (async () => {
           try {
-            const expectedPath = await path.join(
+            const expectedPath = await join(
               resourceInfo.path,
               resourceInfo.name
             );
@@ -277,17 +285,17 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
           updateInfo = currentUpdateInfo;
         }
 
-        const dir = await path.appLocalDataDir();
-        const ompFolder = await path.join(dir, "omp");
-        const ompFile = await path.join(ompFolder, "omp-client.dll");
+        const dir = await appLocalDataDir();
+        const ompFolder = await join(dir, "omp");
+        const ompFile = await join(ompFolder, "omp-client.dll");
 
         // Ensure OMP folder exists
-        if (!(await fs.exists(ompFolder))) {
-          await fs.createDir(ompFolder, { recursive: true });
+        if (!(await exists(ompFolder))) {
+          await mkdir(ompFolder, { recursive: true });
         }
 
         // Check if OMP file exists and is valid
-        if (await fs.exists(ompFile)) {
+        if (await exists(ompFile)) {
           const checksums: string[] = await invoke("get_checksum_of_files", {
             list: [ompFile],
           });
@@ -316,18 +324,18 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
       try {
         setCurrentTask("Validating file checksums...");
 
-        const dir = await path.appLocalDataDir();
-        const sampPath = await path.join(dir, "samp");
+        const dir = await appLocalDataDir();
+        const sampPath = await join(dir, "samp");
 
-        if (!(await fs.exists(sampPath))) {
+        if (!(await exists(sampPath))) {
           Log.info("SAMP directory does not exist");
           await downloadSAMPFiles(sampPath);
           return;
         }
 
-        const files = await fs.readDir(sampPath, { recursive: true });
+        const files = await readDir(sampPath);
         const fileList: string[] = [];
-        files.forEach((file) => collectFiles(file, fileList));
+        await collectFiles(sampPath, files, fileList);
 
         if (fileList.length === 0) {
           Log.info("No files found in SAMP directory");
@@ -345,8 +353,8 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
 
         if (validationResults.includes(false)) {
           Log.info("File validation failed, re-downloading SAMP files");
-          await fs.removeDir(sampPath, { recursive: true });
-          await fs.createDir(sampPath, { recursive: true });
+          await remove(sampPath, { recursive: true });
+          await mkdir(sampPath, { recursive: true });
           await downloadSAMPFiles(sampPath);
           return;
         }
@@ -378,20 +386,20 @@ const LoadingScreen = ({ onEnd }: LoadingScreenProps) => {
 
   const validateResources = useCallback(async () => {
     try {
-      const dir = await path.appLocalDataDir();
-      const sampPath = await path.join(dir, "samp");
+      const dir = await appLocalDataDir();
+      const sampPath = await join(dir, "samp");
 
       // Check if SAMP directory exists
-      if (!(await fs.exists(sampPath))) {
+      if (!(await exists(sampPath))) {
         Log.info("Creating SAMP directory");
-        await fs.createDir(sampPath, { recursive: true });
+        await mkdir(sampPath, { recursive: true });
         await downloadSAMPFiles(sampPath);
         return;
       }
 
       // Check if archive exists and is valid
-      const archive = await path.join(sampPath, "samp_clients.7z");
-      if (await fs.exists(archive)) {
+      const archive = await join(sampPath, "samp_clients.7z");
+      if (await exists(archive)) {
         try {
           const checksums: string[] = await invoke("get_checksum_of_files", {
             list: [archive],

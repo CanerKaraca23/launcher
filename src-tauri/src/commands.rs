@@ -83,6 +83,7 @@ pub fn resolve_hostname(hostname: String) -> std::result::Result<String, String>
     Err(format!("No IPv4 address found for hostname '{}'", hostname))
 }
 
+#[cfg(target_os = "windows")]
 #[tauri::command]
 pub fn is_process_alive(pid: u32) -> bool {
     use windows_sys::Win32::Foundation::{CloseHandle, HANDLE};
@@ -97,6 +98,20 @@ pub fn is_process_alive(pid: u32) -> bool {
             false
         }
     }
+}
+
+#[cfg(not(target_os = "windows"))]
+#[tauri::command]
+pub fn is_process_alive(pid: u32) -> bool {
+    // On Unix-like systems, we can check if a process exists using kill with signal 0
+    use std::process::Command;
+    
+    // Try to send signal 0 to the process (just checks if process exists)
+    Command::new("kill")
+        .args(["-0", &pid.to_string()])
+        .output()
+        .map(|output| output.status.success())
+        .unwrap_or(false)
 }
 
 #[tauri::command]

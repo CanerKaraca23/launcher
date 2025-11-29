@@ -1,4 +1,4 @@
-import { clipboard } from "@tauri-apps/api";
+import { readText } from "@tauri-apps/plugin-clipboard-manager";
 import { t } from "i18next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
@@ -31,7 +31,7 @@ const AddThirdPartyServerModal = () => {
 
   useEffect(() => {
     if (visible) {
-      clipboard.readText().then((text) => {
+      readText().then((text) => {
         if (text) {
           setServerAddress(text);
         }

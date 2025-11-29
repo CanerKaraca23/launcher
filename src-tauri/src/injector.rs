@@ -9,6 +9,9 @@ use std::process::Command;
 use crate::{constants::*, errors::*};
 
 #[cfg(not(target_os = "windows"))]
+use crate::errors::LauncherError;
+
+#[cfg(not(target_os = "windows"))]
 pub async fn run_samp(
     _name: &str,
     _ip: &str,
@@ -18,7 +21,7 @@ pub async fn run_samp(
     _omp_file: &str,
     _password: &str,
     _discord: bool,
-) -> Result<()> {
+) -> std::result::Result<(), LauncherError> {
     Ok(())
 }
 

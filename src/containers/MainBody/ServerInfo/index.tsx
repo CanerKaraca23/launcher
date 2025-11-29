@@ -1,4 +1,4 @@
-import { shell } from "@tauri-apps/api";
+import { open as shellOpen } from "@tauri-apps/plugin-shell";
 import { useMemo } from "react";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import Icon from "../../../components/Icon";
@@ -64,7 +64,7 @@ const ServerInfo = () => {
               paddingLeft: sc(12),
             }}
             onPress={() =>
-              shell.open(webUrl.includes("http") ? webUrl : "https://" + webUrl)
+              shellOpen(webUrl.includes("http") ? webUrl : "https://" + webUrl)
             }
           >
             {bannerUrl.length ? (

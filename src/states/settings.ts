@@ -1,5 +1,4 @@
 import { emit, listen } from "@tauri-apps/api/event";
-import { appWindow } from "@tauri-apps/api/window";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { stateStorage } from "../utils/stateStorage";
@@ -40,11 +39,10 @@ const useSettings = create<SettingsPersistentState>()(
   )
 );
 
+// In Tauri v2, cross-window event sync: listen for changes and rehydrate
 ["setNickName"].forEach((event) =>
-  listen(event, (ev) => {
-    if (ev.windowLabel !== appWindow.label) {
-      useSettings.persist.rehydrate();
-    }
+  listen(event, () => {
+    useSettings.persist.rehydrate();
   })
 );
 
