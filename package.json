@@ -39,7 +39,7 @@
     "react-native-animatable": "^1.4.0",
     "react-native-big-list": "^1.6.4",
     "react-native-web": "^0.21.2",
-    "zustand": "^5.0.8"
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2",
