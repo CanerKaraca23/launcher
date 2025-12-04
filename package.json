@@ -30,16 +30,16 @@
     "@tauri-apps/plugin-upload": "^2",
     "axios": "^1.13.2",
     "chart.js": "^4.5.1",
-    "i18next": "^25.6.3",
-    "react": "^19.2.0",
+    "i18next": "^25.7.1",
+    "react": "^19.2.1",
     "react-chartjs-2": "^5.3.1",
-    "react-dom": "^19.2.0",
+    "react-dom": "^19.2.1",
     "react-i18next": "^16.3.5",
     "react-native": "0.82.1",
     "react-native-animatable": "^1.4.0",
     "react-native-big-list": "^1.6.4",
     "react-native-web": "^0.21.2",
-    "zustand": "^5.0.8"
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2",
@@ -49,6 +49,6 @@
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-react-native-web": "^0.21.2",
     "typescript": "5.9.3",
-    "vite": "^7.2.4"
+    "vite": "^7.2.6"
   }
 }
