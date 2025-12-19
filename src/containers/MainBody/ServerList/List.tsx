@@ -7,7 +7,7 @@ import ListHeader from "./ListHeader";
 
 interface IProps {
   data: Server[];
-  renderItem: (item: Server, index: number) => JSX.Element;
+  renderItem: (item: Server, index: number) => React.ReactElement;
   containerStyle?: StyleProp<ViewStyle>;
   listRef?: React.RefObject<any>;
 }
