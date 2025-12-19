@@ -3993,9 +3993,9 @@ react-native-animatable@^1.4.0:
     prop-types "^15.8.1"
 
 react-native-big-list@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/react-native-big-list/-/react-native-big-list-1.6.1.tgz#617da4adef83d21b1e35c7f07efc4dd0b73e3aed"
-  integrity sha512-ZPv2oJQ5jFHnOH4ibhqHiyIfJnGACOg2GnfIazgnJlK0nI9SX75Mh4NhD4xuNKbtxoBRL4nBdhxVreZosIfEQQ==
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/react-native-big-list/-/react-native-big-list-1.6.4.tgz#27156e4f0d72817fe30c16eb6b7834237a69d1e6"
+  integrity sha512-sT38MySvmGdA0NLgLl8vZ7EARvonKCIdkoGnVP20Dic/UOQ951URuwkPwXuAMEmq3IFuBI7uOzc7dVYpmtgFaQ==
   dependencies:
     prop-types "^15.8.1"
 
