@@ -87,12 +87,10 @@ pub fn prepare(identifier: &str) {
         // This was originally used by Chromium: https://bugs.chromium.org/p/chromium/issues/detail?id=837796
         dummy_keypress();
 
-        // In interprocess v2, peer_pid() is no longer available on LocalSocketStream.
-        // Since we're always the client (connecting, not listening), we use ASFW_ANY
-        // which allows any process to set the foreground window.
-        let primary_instance_pid = ASFW_ANY;
+        // Allow any process to set the foreground window.
+        // In interprocess v2, peer_pid() is no longer available, so we use ASFW_ANY.
         unsafe {
-            let success = AllowSetForegroundWindow(primary_instance_pid) != 0;
+            let success = AllowSetForegroundWindow(ASFW_ANY) != 0;
             if !success {
                 log::warn!("AllowSetForegroundWindow failed.");
             }
