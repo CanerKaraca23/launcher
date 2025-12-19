@@ -27,7 +27,7 @@ runas = "1.2.0"
 sysinfo = "0.30.13"
 simple-logging = "2.0.2"
 log = "0.4.22"
-charset-normalizer-rs = "1.0.6"
+charset-normalizer-rs = "1.1.0"
 tauri-plugin-upload = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 sevenz-rust = "0.6.1"
 md5 = "0.7.0"
