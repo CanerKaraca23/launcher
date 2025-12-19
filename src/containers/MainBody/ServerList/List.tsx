@@ -1,3 +1,4 @@
+import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import BigList from "react-native-big-list";
 import { useTheme } from "../../../states/theme";
@@ -7,7 +8,7 @@ import ListHeader from "./ListHeader";
 
 interface IProps {
   data: Server[];
-  renderItem: (item: Server, index: number) => JSX.Element;
+  renderItem: (item: Server, index: number) => React.JSX.Element;
   containerStyle?: StyleProp<ViewStyle>;
   listRef?: React.RefObject<any>;
 }
