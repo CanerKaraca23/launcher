@@ -87,9 +87,9 @@ pub fn prepare(identifier: &str) {
         // This was originally used by Chromium: https://bugs.chromium.org/p/chromium/issues/detail?id=837796
         dummy_keypress();
 
-        let primary_instance_pid = conn.peer_pid().unwrap_or(ASFW_ANY);
+        // peer_pid() was removed in interprocess v2, use ASFW_ANY to allow any process
         unsafe {
-            let success = AllowSetForegroundWindow(primary_instance_pid) != 0;
+            let success = AllowSetForegroundWindow(ASFW_ANY) != 0;
             if !success {
                 log::warn!("AllowSetForegroundWindow failed.");
             }
