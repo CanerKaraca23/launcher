@@ -3,7 +3,11 @@ use std::{
     path::Path,
 };
 
-use interprocess::local_socket::prelude::{LocalSocketListener, LocalSocketStream};
+use interprocess::local_socket::{
+    prelude::*,
+    traits::{Listener, Stream},
+    ListenerOptions,
+};
 use windows_sys::Win32::UI::{
     Input::KeyboardAndMouse::{SendInput, INPUT, INPUT_0, INPUT_KEYBOARD, KEYBDINPUT},
     WindowsAndMessaging::{AllowSetForegroundWindow, ASFW_ANY},
@@ -54,9 +58,10 @@ pub fn register<F: FnMut(String) + Send + 'static>(scheme: &str, handler: F) -> 
 
 pub fn listen<F: FnMut(String) + Send + 'static>(mut handler: F) -> Result<()> {
     std::thread::spawn(move || {
-        let listener =
-            LocalSocketListener::bind(ID.get().expect("listen() called before prepare()").as_str())
-                .expect("Can't create listener");
+        let listener = ListenerOptions::new()
+            .name(ID.get().expect("listen() called before prepare()").as_str())
+            .create_sync()
+            .expect("Can't create listener");
 
         for conn in listener.incoming().filter_map(|c| {
             c.map_err(|error| log::error!("Incoming connection failed: {}", error))
