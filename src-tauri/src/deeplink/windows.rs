@@ -3,7 +3,7 @@ use std::{
     path::Path,
 };
 
-use interprocess::local_socket::{LocalSocketListener, LocalSocketStream};
+use interprocess::local_socket::prelude::{LocalSocketListener, LocalSocketStream};
 use windows_sys::Win32::UI::{
     Input::KeyboardAndMouse::{SendInput, INPUT, INPUT_0, INPUT_KEYBOARD, KEYBDINPUT},
     WindowsAndMessaging::{AllowSetForegroundWindow, ASFW_ANY},
