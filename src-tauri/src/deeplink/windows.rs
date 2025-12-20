@@ -5,8 +5,7 @@ use std::{
 
 use interprocess::local_socket::{
     prelude::*,
-    traits::{Listener, Stream},
-    ListenerOptions,
+    GenericNamespaced, ListenerOptions,
 };
 use windows_sys::Win32::UI::{
     Input::KeyboardAndMouse::{SendInput, INPUT, INPUT_0, INPUT_KEYBOARD, KEYBDINPUT},
@@ -58,8 +57,14 @@ pub fn register<F: FnMut(String) + Send + 'static>(scheme: &str, handler: F) -> 
 
 pub fn listen<F: FnMut(String) + Send + 'static>(mut handler: F) -> Result<()> {
     std::thread::spawn(move || {
+        let name = ID
+            .get()
+            .expect("listen() called before prepare()")
+            .as_str()
+            .to_ns_name::<GenericNamespaced>()
+            .expect("Failed to convert identifier to socket name");
         let listener = ListenerOptions::new()
-            .name(ID.get().expect("listen() called before prepare()").as_str())
+            .name(name)
             .create_sync()
             .expect("Can't create listener");
 
@@ -84,7 +89,10 @@ pub fn listen<F: FnMut(String) + Send + 'static>(mut handler: F) -> Result<()> {
 
 pub fn prepare(identifier: &str) {
     let arg1 = std::env::args().nth(1).unwrap_or_default();
-    if let Ok(mut conn) = LocalSocketStream::connect(identifier) {
+    let name = identifier
+        .to_ns_name::<GenericNamespaced>()
+        .expect("Failed to convert identifier to socket name");
+    if let Ok(mut conn) = LocalSocketStream::connect(name) {
         // We are the secondary instance.
         // Prep to activate primary instance by allowing another process to take focus.
 
