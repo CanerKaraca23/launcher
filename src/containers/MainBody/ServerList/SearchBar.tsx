@@ -330,8 +330,7 @@ const styles = StyleSheet.create({
     fontFamily: "Proxima Nova Regular",
     fontSize: sc(17),
     paddingHorizontal: 5,
-    // @ts-ignore
-    outlineStyle: "none",
+    outlineStyle: "none" as any,
   },
   clearButton: {
     height: "100%",

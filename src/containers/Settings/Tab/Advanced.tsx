@@ -95,8 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: sc(38),
     borderRadius: sc(5),
-    // @ts-ignore
-    outlineStyle: "none",
+    outlineStyle: "none" as any,
     fontFamily: "Proxima Nova Regular",
     fontSize: sc(17),
   },
