@@ -453,8 +453,7 @@ const styles = StyleSheet.create({
     marginTop: sc(5),
     height: sc(38),
     borderRadius: sc(5),
-    // @ts-ignore
-    outlineStyle: "none",
+    outlineStyle: "none" as any,
   },
   connectButton: {
     top: sc(52),
