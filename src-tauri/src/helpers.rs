@@ -21,8 +21,10 @@ pub fn decode_buffer(buf: Vec<u8>) -> (String, String) {
 
     // Using charset_normalizer_rs for encoding detection
     let charset_normalizer_encoding = from_bytes(&buf, None)
-        .get_best()
-        .map(|cd| cd.encoding().to_string().to_lowercase())
+        .ok()
+        .and_then(|matches| {
+            matches.get_best().map(|cd| cd.encoding().to_string().to_lowercase())
+        })
         .unwrap_or_else(|| "not_found".to_string());
 
     // Determine the most likely actual encoding
