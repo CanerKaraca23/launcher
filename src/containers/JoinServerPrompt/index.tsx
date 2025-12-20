@@ -136,7 +136,7 @@ const JoinServerPrompt = () => {
         color: perServerNickname.length
           ? theme.textPrimary
           : `${theme.textPrimary}BB`,
-        fontStyle: (perServerNickname.length ? "normal" : "italic") as "normal" | "italic",
+        fontStyle: perServerNickname.length ? "normal" : "italic",
         backgroundColor: theme.textInputBackgroundColor,
       },
       connectButton: {
