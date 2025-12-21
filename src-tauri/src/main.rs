@@ -189,7 +189,7 @@ fn setup_tauri_app(app: &mut tauri::App) -> std::result::Result<(), Box<dyn std:
         main_window.set_min_size(Some(PhysicalSize::new(WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT)))?;
     }
 
-    if let Some(path) = handle.path_resolver().app_data_dir() {
+    if let Some(path) = handle.path_resolver().app_dir() {
         fs::create_dir_all(&path).map_err(|e| {
             error!("Failed to create app data directory: {}", e);
             e
