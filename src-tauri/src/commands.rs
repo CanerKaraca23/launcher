@@ -101,7 +101,7 @@ pub fn is_process_alive(pid: u32) -> bool {
 
     unsafe {
         let handle: HANDLE = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, 0, pid);
-        if handle != 0 {
+        if !handle.is_null() {
             CloseHandle(handle);
             true
         } else {
