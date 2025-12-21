@@ -10,7 +10,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1", features = [] }
+tauri-build = { version = "2", features = [] }
 
 [dependencies]
 tauri = { version = "1", features = [ "clipboard-all", "fs-all", "path-all", "macos-private-api", "process-all", "window-all", "dialog-all", "os-all", "shell-open"] }
@@ -43,7 +43,7 @@ tauri-utils = { version = "1" }
 
 [target.'cfg(windows)'.dependencies]
 interprocess = { version = "2", default-features = false }
-windows-sys = { version = "0.52", features = [
+windows-sys = { version = "0.61", features = [
     "Win32_Foundation",
     "Win32_UI_Input_KeyboardAndMouse",
     "Win32_UI_Shell",
@@ -51,7 +51,7 @@ windows-sys = { version = "0.52", features = [
 ] }
 winreg = "0.55"
 dll-syringe = "0.17"
-windows = { version = "0.39", features = [
+windows = { version = "0.61", features = [
     "Win32_System_Console",
     "Win32_Foundation",
     "Win32_UI",
