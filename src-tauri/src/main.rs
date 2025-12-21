@@ -27,7 +27,6 @@ use gumdrop::Options;
 use injector::run_samp;
 use log::{error, info, LevelFilter};
 use std::fs;
-use tauri::api::path::app_data_dir;
 use tauri::Manager;
 use tauri::PhysicalSize;
 
@@ -190,8 +189,7 @@ fn setup_tauri_app(app: &mut tauri::App) -> std::result::Result<(), Box<dyn std:
         main_window.set_min_size(Some(PhysicalSize::new(WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT)))?;
     }
 
-    let config = handle.config();
-    if let Some(path) = app_data_dir(&config) {
+    if let Some(path) = handle.path_resolver().app_dir() {
         fs::create_dir_all(&path).map_err(|e| {
             error!("Failed to create app data directory: {}", e);
             e
