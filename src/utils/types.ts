@@ -127,18 +127,6 @@ export interface ServerIdentifier {
   port: number;
 }
 
-// Type guards
-export const isValidSortType = (value: string): value is SortType => {
-  return SORT_TYPES.includes(value as SortType);
-};
-
-export const isValidListType = (value: string): value is ListType => {
-  return LIST_TYPES.includes(value as ListType);
-};
-
-export const isValidSAMPVersion = (value: string): value is SAMPDLLVersions => {
-  return SAMP_DLL_VERSIONS.includes(value as SAMPDLLVersions);
-};
 
 // Helper functions for server operations
 export const getServerEndpoint = (server: ServerIdentifier): ServerEndpoint => {
