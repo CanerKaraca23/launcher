@@ -58,19 +58,23 @@ pub fn get_nickname_from_samp() -> String {
 }
 
 #[tauri::command]
-pub fn rerun_as_admin() -> std::result::Result<String, String> {
-    let exe_path = std::env::current_exe()
-        .map_err(|_| "Failed to get current executable path".to_string())?
-        .into_os_string()
-        .into_string()
-        .map_err(|_| "Failed to convert path to string".to_string())?;
+pub async fn rerun_as_admin() -> std::result::Result<String, String> {
+    tauri::async_runtime::spawn_blocking(move || {
+        let exe_path = std::env::current_exe()
+            .map_err(|_| "Failed to get current executable path".to_string())?
+            .into_os_string()
+            .into_string()
+            .map_err(|_| "Failed to convert path to string".to_string())?;
 
-    runas::Command::new(exe_path)
-        .arg("")
-        .status()
-        .map_err(|_| "Failed to restart as administrator".to_string())?;
+        runas::Command::new(exe_path)
+            .arg("")
+            .status()
+            .map_err(|_| "Failed to restart as administrator".to_string())?;
 
-    Ok("SUCCESS".to_string())
+        Ok("SUCCESS".to_string())
+    })
+    .await
+    .map_err(|e| format!("Internal error: {}", e))?
 }
 
 #[tauri::command]
@@ -79,25 +83,29 @@ pub fn get_samp_favorite_list() -> String {
 }
 
 #[tauri::command]
-pub fn resolve_hostname(hostname: String) -> std::result::Result<String, String> {
-    use std::net::{IpAddr, ToSocketAddrs};
+pub async fn resolve_hostname(hostname: String) -> std::result::Result<String, String> {
+    tauri::async_runtime::spawn_blocking(move || {
+        use std::net::{IpAddr, ToSocketAddrs};
 
-    if hostname.is_empty() {
-        return Err("Hostname cannot be empty".to_string());
-    }
-
-    let addr = format!("{}:80", hostname);
-    let addrs = addr
-        .to_socket_addrs()
-        .map_err(|e| format!("Failed to resolve hostname '{}': {}", hostname, e))?;
-
-    for ip in addrs {
-        if let IpAddr::V4(ipv4) = ip.ip() {
-            return Ok(ipv4.to_string());
+        if hostname.is_empty() {
+            return Err("Hostname cannot be empty".to_string());
         }
-    }
 
-    Err(format!("No IPv4 address found for hostname '{}'", hostname))
+        let addr = format!("{}:80", hostname);
+        let addrs = addr
+            .to_socket_addrs()
+            .map_err(|e| format!("Failed to resolve hostname '{}': {}", hostname, e))?;
+
+        for ip in addrs {
+            if let IpAddr::V4(ipv4) = ip.ip() {
+                return Ok(ipv4.to_string());
+            }
+        }
+
+        Err(format!("No IPv4 address found for hostname '{}'", hostname))
+    })
+    .await
+    .map_err(|e| format!("Internal error: {}", e))?
 }
 
 #[tauri::command]
@@ -117,45 +125,53 @@ pub fn is_process_alive(pid: u32) -> bool {
 }
 
 #[tauri::command]
-pub fn get_checksum_of_files(list: Vec<String>) -> std::result::Result<Vec<String>, String> {
-    let mut result = Vec::new();
+pub async fn get_checksum_of_files(list: Vec<String>) -> std::result::Result<Vec<String>, String> {
+    tauri::async_runtime::spawn_blocking(move || {
+        let mut result = Vec::new();
 
-    for file in list {
-        let mut f =
-            File::open(&file).map_err(|e| format!("Failed to open file '{}': {}", file, e))?;
+        for file in list {
+            let mut f =
+                File::open(&file).map_err(|e| format!("Failed to open file '{}': {}", file, e))?;
 
-        let mut contents = Vec::new();
-        f.read_to_end(&mut contents)
-            .map_err(|e| format!("Failed to read file '{}': {}", file, e))?;
+            let mut contents = Vec::new();
+            f.read_to_end(&mut contents)
+                .map_err(|e| format!("Failed to read file '{}': {}", file, e))?;
 
-        let digest = compute(&contents);
-        let checksum_entry = format!("{}|{:x}", file, digest);
-        result.push(checksum_entry);
-    }
+            let digest = compute(&contents);
+            let checksum_entry = format!("{}|{:x}", file, digest);
+            result.push(checksum_entry);
+        }
 
-    Ok(result)
+        Ok(result)
+    })
+    .await
+    .map_err(|e| format!("Internal error: {}", e))?
 }
 
 #[tauri::command]
-pub fn extract_7z(path: String, output_path: String) -> std::result::Result<(), String> {
-    decompress_file(&path, &output_path)
-        .map_err(|e| format!("Failed to extract archive '{}': {}", path, e))
+pub async fn extract_7z(path: String, output_path: String) -> std::result::Result<(), String> {
+    tauri::async_runtime::spawn_blocking(move || {
+        decompress_file(&path, &output_path)
+            .map_err(|e| format!("Failed to extract archive '{}': {}", path, e))
+    })
+    .await
+    .map_err(|e| format!("Internal error: {}", e))?
 }
 
 #[tauri::command]
-pub fn copy_files_to_gtasa(src: String, gtasa_dir: String) -> std::result::Result<(), String> {
-    match helpers::copy_files(&src, &gtasa_dir) {
+pub async fn copy_files_to_gtasa(src: String, gtasa_dir: String) -> std::result::Result<(), String> {
+    tauri::async_runtime::spawn_blocking(move || match helpers::copy_files(&src, &gtasa_dir) {
         Ok(_) => Ok(()),
         Err(e) => {
             log::warn!("{}", e);
             match e {
-                LauncherError::AccessDenied(_) => {
-                    return Err("need_admin".to_string());
-                }
-                _ => return Err(e.to_string()),
+                LauncherError::AccessDenied(_) => Err("need_admin".to_string()),
+                _ => Err(e.to_string()),
             }
         }
-    }
+    })
+    .await
+    .map_err(|e| format!("Internal error: {}", e))?
 }
 
 #[tauri::command]
