@@ -43,14 +43,14 @@ jobs:
           echo "setup_artifact_name=${setup_artifact_name}" >> $GITHUB_OUTPUT
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.vars.outputs.artifact_name }}
           path: src-tauri/target/i686-pc-windows-msvc/release/omp-launcher.exe
           if-no-files-found: error
 
       - name: Upload setup artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.vars.outputs.setup_artifact_name }}
           path: src-tauri/target/i686-pc-windows-msvc/release/bundle/nsis/omp-launcher_1.6.3_x86-setup.exe
