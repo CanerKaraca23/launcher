@@ -1,5 +1,5 @@
 import { expect, test, describe } from "bun:test";
-import { binarySearch } from "./array";
+import { binarySearch } from "../../src/utils/array";
 
 describe("binarySearch", () => {
   const numberCompare = (a: number, b: number) => a - b;
