@@ -5,7 +5,6 @@ use sevenz_rust::decompress_file;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
-use tauri::Manager;
 
 #[tauri::command]
 pub async fn inject(
