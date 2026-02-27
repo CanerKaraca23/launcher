@@ -4,6 +4,7 @@ use md5::compute;
 use sevenz_rust::decompress_file;
 use std::fs::File;
 use std::io::Read;
+use std::path::Path;
 
 #[tauri::command]
 pub async fn inject(
@@ -117,12 +118,41 @@ pub fn is_process_alive(pid: u32) -> bool {
 }
 
 #[tauri::command]
-pub fn get_checksum_of_files(list: Vec<String>) -> std::result::Result<Vec<String>, String> {
+pub fn get_checksum_of_files(
+    app_handle: tauri::AppHandle,
+    list: Vec<String>,
+) -> std::result::Result<Vec<String>, String> {
     let mut result = Vec::new();
 
+    let app_local_data_dir = app_handle
+        .path_resolver()
+        .app_local_data_dir()
+        .ok_or_else(|| "Failed to get app local data directory".to_string())?;
+
+    // We canonicalize the base directory to handle symlinks and different path formats (e.g. UNC paths on Windows)
+    // If it doesn't exist, we can't really validate against it.
+    let canonical_app_local_data_dir = app_local_data_dir.canonicalize().map_err(|e| {
+        format!(
+            "Failed to canonicalize app local data directory '{}': {}",
+            app_local_data_dir.display(),
+            e
+        )
+    })?;
+
     for file in list {
-        let mut f =
-            File::open(&file).map_err(|e| format!("Failed to open file '{}': {}", file, e))?;
+        let path = Path::new(&file);
+
+        // Canonicalize the input path to resolve any .. or symlinks
+        let canonical_path = path
+            .canonicalize()
+            .map_err(|e| format!("Failed to open file '{}': {}", file, e))?;
+
+        if !canonical_path.starts_with(&canonical_app_local_data_dir) {
+            return Err(format!("Access to file '{}' is not allowed", file));
+        }
+
+        let mut f = File::open(&canonical_path)
+            .map_err(|e| format!("Failed to open file '{}': {}", file, e))?;
 
         let mut contents = Vec::new();
         f.read_to_end(&mut contents)
