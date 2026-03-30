@@ -50,7 +50,7 @@ windows-sys = { version = "0.61", features = [
     "Win32_UI_WindowsAndMessaging",
     "Win32_System_JobObjects"
 ] }
-winreg = "0.55"
+winreg = "0.56"
 dll-syringe = "0.17"
 windows = { version = "0.62", features = [
     "Win32_System_Console",
