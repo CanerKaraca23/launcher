@@ -2,7 +2,7 @@ use std::fs;
 use std::path::Path;
 
 use chardet::{charset2encoding, detect};
-use chardetng::EncodingDetector;
+use chardetng::{EncodingDetector, Iso2022JpDetection, Utf8Detection};
 use charset_normalizer_rs::from_bytes;
 use encoding_rs::{Encoding, UTF_8};
 use log::info;
@@ -12,9 +12,12 @@ use crate::constants::*;
 /// Decodes a buffer of bytes into a string, detecting the encoding
 pub fn decode_buffer(buf: Vec<u8>) -> (String, String) {
     // Using chardetng for encoding detection
-    let mut detector = EncodingDetector::new();
+    let mut detector = EncodingDetector::new(Iso2022JpDetection::Allow);
     detector.feed(&buf, true);
-    let chardetng_encoding = detector.guess(None, true).name().to_lowercase();
+    let chardetng_encoding = detector
+        .guess(None, Utf8Detection::Allow)
+        .name()
+        .to_lowercase();
 
     // Using chardet for encoding detection
     let chardet_encoding = charset2encoding(&detect(&buf).0).to_string().to_lowercase();
@@ -23,7 +26,9 @@ pub fn decode_buffer(buf: Vec<u8>) -> (String, String) {
     let charset_normalizer_encoding = from_bytes(&buf, None)
         .ok()
         .and_then(|matches| {
-            matches.get_best().map(|cd| cd.encoding().to_string().to_lowercase())
+            matches
+                .get_best()
+                .map(|cd| cd.encoding().to_string().to_lowercase())
         })
         .unwrap_or_else(|| "not_found".to_string());
 
