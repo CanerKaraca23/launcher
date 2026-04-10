@@ -6,9 +6,11 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
+    "types": ["node"],
 
     /* Bundler mode */
     "moduleResolution": "Node",
+    "ignoreDeprecations": "6.0",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
