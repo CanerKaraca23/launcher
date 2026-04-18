@@ -1269,9 +1269,9 @@ hyphenate-style-name@^1.0.3:
   integrity sha512-WDC/ui2VVRrz3jOVi+XtjqkDjiVjTtFaAGiW37k6b+ohyQ5wYDOGkvCZa8+H0nx3gyvv0+BST9xuOgIyGQ00gw==
 
 i18next@^26.0.4:
-  version "26.0.4"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-26.0.4.tgz#fb1511e53dc617037522bbf7e983cb7384d24f0f"
-  integrity sha512-gXF7U9bfioXPLv7mw8Qt2nfO7vij5MyINvPgVv99pX3fL1Y01pw2mKBFrlYpRxRCl2wz3ISenj6VsMJT2isfuA==
+  version "26.0.6"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-26.0.6.tgz#558b5e3170249d7d338d7732edb662a4108082a0"
+  integrity sha512-A4U6eCXodIbrhf8EarRurB9/4ebyaurH4+fu4gig9bqxmpSt+fCAFm/GpRQDcN1Xzu/LdFCx4nYHsnM1edIIbg==
   dependencies:
     "@babel/runtime" "^7.29.2"
 
