@@ -22,15 +22,15 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@react-native-clipboard/clipboard": "^1.16.3",
     "@tauri-apps/api": "^1.6.0",
-    "axios": "^1.16.0",
+    "axios": "^1.16.1",
     "chart.js": "^4.5.1",
-    "i18next": "^26.0.10",
+    "i18next": "^26.2.0",
     "patch-package": "^8.0.1",
     "postinstall-postinstall": "^2.1.0",
     "react": "^19.2.6",
     "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.2.6",
-    "react-i18next": "^17.0.7",
+    "react-i18next": "^17.0.8",
     "react-native-animatable": "^1.4.0",
     "react-native-big-list": "^1.6.4",
     "react-native-web": "^0.21.2",
@@ -39,12 +39,12 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.6.3",
-    "@types/node": "25.6.2",
+    "@types/node": "25.9.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/react-native": "^0.73.0",
-    "@vitejs/plugin-react": "^6.0.1",
+    "@vitejs/plugin-react": "^6.0.2",
     "typescript": "^6.0.3",
-    "vite": "^8.0.11"
+    "vite": "^8.0.13"
   }
 }
