@@ -133,7 +133,7 @@ async fn handle_cli_args() -> Result<()> {
                 // resolve hostname to ipv4 so the game does not truncate hyphenated hosts
                 let host = args.host.as_ref().unwrap();
                 let resolved_host =
-                    commands::resolve_hostname_to_ipv4(host).unwrap_or_else(|e| {
+                    helpers::resolve_hostname_to_ipv4(host).unwrap_or_else(|e| {
                         info!("Failed to resolve hostname '{}', using raw value: {}", host, e);
                         host.clone()
                     });
