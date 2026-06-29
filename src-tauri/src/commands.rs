@@ -78,8 +78,8 @@ pub fn get_samp_favorite_list() -> String {
     samp::get_samp_favorite_list()
 }
 
-#[tauri::command]
-pub fn resolve_hostname(hostname: String) -> std::result::Result<String, String> {
+// resolves a hostname to its first ipv4 address
+pub fn resolve_hostname_to_ipv4(hostname: &str) -> std::result::Result<String, String> {
     use std::net::{IpAddr, ToSocketAddrs};
 
     if hostname.is_empty() {
@@ -98,6 +98,11 @@ pub fn resolve_hostname(hostname: String) -> std::result::Result<String, String>
     }
 
     Err(format!("No IPv4 address found for hostname '{}'", hostname))
+}
+
+#[tauri::command]
+pub fn resolve_hostname(hostname: String) -> std::result::Result<String, String> {
+    resolve_hostname_to_ipv4(&hostname)
 }
 
 #[tauri::command]
