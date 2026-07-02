@@ -703,9 +703,9 @@ base64-js@^1.5.1:
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
 
 baseline-browser-mapping@^2.10.38:
-  version "2.10.40"
-  resolved "https://registry.yarnpkg.com/baseline-browser-mapping/-/baseline-browser-mapping-2.10.40.tgz#f372c8eb36ff4ad0b5e7ae467014abef124554ba"
-  integrity sha512-BSSLZ9/Cjjv7Gtj5B68ZzXcXUg8iOf3fme+FCuh8rC/Go+Kmh8cox7M3A8dolou16s64QjLPOSdngh7GxXvkSw==
+  version "2.10.41"
+  resolved "https://registry.yarnpkg.com/baseline-browser-mapping/-/baseline-browser-mapping-2.10.41.tgz#86738e4aafb4392a32672642ddd092c0c2f80161"
+  integrity sha512-WwS7MHhqGHHlaVsqRZnhvCEMS0owDX+SxRlve7JkuH7My1Ara3ZriTmCQupPfYjxMZ8I/tgxtJYr2t7taHaH4A==
 
 braces@^3.0.3:
   version "3.0.3"
@@ -2448,10 +2448,10 @@ utils-merge@1.0.1:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==
 
-vite@^8.1.2:
-  version "8.1.2"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-8.1.2.tgz#3ac29b5868ccf28c59321391be1ebe906f135ebd"
-  integrity sha512-6YYPbRXTxx6bRXmOn7XdnQAy5DQNHhDgtjhDHI13oe4pY93kkcdGJWxpGwOm++/Wh0QpQhDrpIoVMrmrsI5AGQ==
+vite@^8.1.3:
+  version "8.1.3"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-8.1.3.tgz#ce05b445b501014a10e5a8073811759c223e8ac2"
+  integrity sha512-Ds+gBRbj0lwRO2Y5hwnUBdxSwlAve9LeRyU4sNnAr0ewW0gWF0n5bgXgUzbgZ49MV9BVUAQUFYVcDUcilUExMA==
   dependencies:
     lightningcss "^1.32.0"
     picomatch "^4.0.4"
