@@ -30,7 +30,7 @@
     "react": "^19.2.6",
     "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.2.6",
-    "react-i18next": "^17.0.9",
+    "react-i18next": "^17.0.10",
     "react-native-animatable": "^1.4.0",
     "react-native-big-list": "^1.6.4",
     "react-native-web": "^0.21.2",
