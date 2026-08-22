@@ -19,11 +19,12 @@ const List = (props: IProps) => {
   return (
     <View style={styles.mainContainer} ref={props.listRef}>
       <ListHeader />
+      {/* @ts-ignore */}
       <BigList
         id={themeType === "dark" ? "scroll" : "scroll-light"}
         contentContainerStyle={props.containerStyle}
         data={props.data}
-        renderItem={(info) => props.renderItem(info.item, info.index)}
+        renderItem={(info: any) => props.renderItem(info.item, info.index)}
         headerHeight={0}
         itemHeight={sc(39)}
         renderFooter={null}
