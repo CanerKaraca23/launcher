@@ -123,7 +123,7 @@ const General = () => {
       <View style={styles.pathInputContainer}>
         <TextInput
           value={gtasaPath}
-          onChangeText={(text) => setGTASAPath(text)}
+          onChangeText={(text: string) => setGTASAPath(text)}
           style={[
             styles.pathInput,
             {

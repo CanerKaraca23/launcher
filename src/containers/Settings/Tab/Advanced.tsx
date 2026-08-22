@@ -30,7 +30,7 @@ const Advanced = () => {
           <View style={styles.pathInputContainer}>
             <TextInput
               value={customGameExe}
-              onChangeText={(text) => setCustomGameExe(text)}
+              onChangeText={(text: string) => setCustomGameExe(text)}
               style={[
                 styles.pathInput,
                 {
