@@ -109,8 +109,7 @@ const ServerItem = memo((props: IProps) => {
           style={[
             styles.pressableContainer,
             {
-              // @ts-ignore
-              cursor: isDragging ? "grabbing" : "default",
+              cursor: (isDragging ? "grabbing" : "default") as any,
             },
           ]}
           onPress={() => onPress()}

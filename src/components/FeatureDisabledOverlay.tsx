@@ -1,9 +1,11 @@
-import { View, ViewProps } from "react-native";
+import { StyleProp, View, ViewProps, ViewStyle } from "react-native";
 import { useTheme } from "../states/theme";
 import { sc } from "../utils/sizeScaler";
 import Text from "./Text";
 
-interface IProps extends ViewProps {}
+interface IProps extends ViewProps {
+  style?: StyleProp<ViewStyle>;
+}
 
 const FeatureDisabledOverlay = (props: IProps) => {
   const { theme } = useTheme();

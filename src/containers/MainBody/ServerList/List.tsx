@@ -1,3 +1,4 @@
+import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import BigList from "react-native-big-list";
 import { useTheme } from "../../../states/theme";
@@ -7,7 +8,7 @@ import ListHeader from "./ListHeader";
 
 interface IProps {
   data: Server[];
-  renderItem: (item: Server, index: number) => JSX.Element;
+  renderItem: (item: Server, index: number) => React.JSX.Element;
   containerStyle?: StyleProp<ViewStyle>;
   listRef?: React.RefObject<any>;
 }
@@ -18,11 +19,12 @@ const List = (props: IProps) => {
   return (
     <View style={styles.mainContainer} ref={props.listRef}>
       <ListHeader />
+      {/* @ts-ignore */}
       <BigList
         id={themeType === "dark" ? "scroll" : "scroll-light"}
         contentContainerStyle={props.containerStyle}
         data={props.data}
-        renderItem={(info) => props.renderItem(info.item, info.index)}
+        renderItem={(info: any) => props.renderItem(info.item, info.index)}
         headerHeight={0}
         itemHeight={sc(39)}
         renderFooter={null}
