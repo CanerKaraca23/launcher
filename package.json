@@ -30,7 +30,7 @@
     "react": "^19.3.0",
     "react-chartjs-2": "^5.3.1",
     "react-dom": "^19.3.0",
-    "react-i18next": "^17.0.13",
+    "react-i18next": "^17.0.15",
     "react-native-animatable": "^1.4.0",
     "react-native-big-list": "^1.6.4",
     "react-native-web": "^0.21.2",
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.6.3",
-    "@types/node": "26.6.1",
+    "@types/node": "26.6.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@types/react-native": "^0.73.0",
