@@ -23,8 +23,7 @@ const StaticModal = (props: IProps) => {
         style={{
           height: "100%",
           width: "100%",
-          // @ts-ignore
-          cursor: "default",
+          cursor: "default" as any,
         }}
         onPress={() => props.onDismiss()}
       />

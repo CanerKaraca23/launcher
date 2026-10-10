@@ -30,7 +30,7 @@ const Advanced = () => {
           <View style={styles.pathInputContainer}>
             <TextInput
               value={customGameExe}
-              onChangeText={(text) => setCustomGameExe(text)}
+              onChangeText={(text: string) => setCustomGameExe(text)}
               style={[
                 styles.pathInput,
                 {
@@ -95,8 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: sc(38),
     borderRadius: sc(5),
-    // @ts-ignore
-    outlineStyle: "none",
+    outlineStyle: "none" as any,
     fontFamily: "Proxima Nova Regular",
     fontSize: sc(17),
   },
