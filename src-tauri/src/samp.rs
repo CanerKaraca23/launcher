@@ -19,7 +19,7 @@ const MODEL_CACHE_VALUE: &str = "model_cache";
 
 #[cfg(target_os = "windows")]
 fn default_model_cache_folder() -> Result<String, String> {
-    let documents = document_dir().ok_or("Could not find the Documents folder")?;
+    let documents = dirs_next::document_dir().ok_or("Could not find the Documents folder")?;
     let cache = documents
         .join("GTA San Andreas User Files")
         .join("SAMP")
