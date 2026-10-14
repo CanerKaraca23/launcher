@@ -2112,7 +2112,7 @@ react-native-web@^0.21.3:
     postcss-value-parser "^4.2.0"
     styleq "^0.1.3"
 
-react-native@*:
+"react-native@*", "react-native@^0.87.1":
   version "0.87.1"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.87.1.tgz#493036a52fb741e0462aee8911653d998e8bc8db"
   integrity sha512-DJKG6ANoD7BtrE4z9DewiSD7/RxCX73lK5Pu49aUr85P3333Dm2roTiP0rRjQNDZdVizHSOmstWfwF/o9EjCRA==
