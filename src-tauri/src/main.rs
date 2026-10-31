@@ -11,6 +11,10 @@ mod ipc;
 mod query;
 mod samp;
 mod validation;
+#[cfg(windows)]
+mod wine;
+#[cfg(windows)]
+mod wine_overlay;
 
 #[path = "deeplink/lib.rs"]
 #[cfg(target_os = "windows")]
@@ -112,7 +116,10 @@ async fn main() {
     }
 
     if let Err(e) = run_tauri_app().await {
-        error!("Failed to run Tauri app: {}", e);
+        let message = e.to_string();
+        #[cfg(windows)]
+        wine::show_webview_startup_error(&message);
+        error!("Failed to run Tauri app: {}", message);
         exit(1);
     }
 }
@@ -215,6 +222,7 @@ async fn run_tauri_app() -> Result<()> {
             commands::rerun_as_admin,
             commands::resolve_hostname,
             commands::is_process_alive,
+            commands::is_wine,
             commands::log_info,
             commands::log_warn,
             commands::log_error,
@@ -224,7 +232,7 @@ async fn run_tauri_app() -> Result<()> {
             query::query_server,
             ipc::send_message_to_game
         ])
-        .run(tauri::generate_context!());
+        .run(tauri_context());
 
     match builder_result {
         Ok(_) => Ok(()),
@@ -235,11 +243,32 @@ async fn run_tauri_app() -> Result<()> {
     }
 }
 
+fn tauri_context() -> tauri::Context<tauri::utils::assets::EmbeddedAssets> {
+    #[allow(unused_mut)]
+    let mut context = tauri::generate_context!();
+
+    #[cfg(windows)]
+    if wine::is_wine() {
+        let args = wine::browser_args();
+        for window in &mut context.config_mut().tauri.windows {
+            window.additional_browser_args = args.clone();
+            // Wine cannot show the transparent window before the page draws,
+            // so it would flash white. The frontend shows it once it is sized.
+            window.visible = false;
+        }
+    }
+
+    context
+}
+
 fn setup_tauri_app(app: &mut tauri::App) -> std::result::Result<(), Box<dyn std::error::Error>> {
     let handle = app.handle();
 
     if let Some(main_window) = app.get_window("main") {
         main_window.set_min_size(Some(PhysicalSize::new(WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT)))?;
+
+        #[cfg(windows)]
+        wine::round_window_corners(&main_window);
     }
 
     if let Some(path) = handle.path_resolver().app_data_dir() {
