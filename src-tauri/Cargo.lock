@@ -3527,9 +3527,10 @@ dependencies = [
  "tauri-plugin-upload",
  "tauri-utils",
  "tokio",
+ "webview2-com",
  "winapi",
- "windows 0.62.2",
- "windows-sys 0.61.2",
+ "windows 0.39.0",
+ "windows-sys 0.52.0",
  "winreg 0.56.0",
 ]
 
