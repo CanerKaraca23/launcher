@@ -30,7 +30,7 @@ use windows::Win32::System::Com::{
     CoCreateInstance, IStream, CLSCTX_INPROC_SERVER, STREAM_SEEK_SET,
 };
 use windows_sys::Win32::Foundation::{
-    CloseHandle, HWND, INVALID_HANDLE_VALUE, LPARAM, LRESULT, WPARAM,
+    CloseHandle, HANDLE, HWND, INVALID_HANDLE_VALUE, LPARAM, LRESULT, WPARAM,
 };
 use windows_sys::Win32::System::Memory::{
     CreateFileMappingW, MapViewOfFile, UnmapViewOfFile, FILE_MAP_ALL_ACCESS,
@@ -150,7 +150,7 @@ pub fn attach(window: &Window, game_pid: i32) {
     let Ok(hwnd) = window.hwnd() else {
         return;
     };
-    let hwnd = hwnd.0;
+    let hwnd: HWND = hwnd.0 as HWND;
 
     // tao re-applies its own styles on some changes, so put ours back
     window.on_window_event(move |event| {
@@ -305,7 +305,7 @@ impl Capture {
         window: Window,
         state: Arc<OverlayState>,
     ) -> Option<Self> {
-        let stream = CreateStreamOnHGlobal(0, true).ok()?;
+        let stream = CreateStreamOnHGlobal(windows::Win32::Foundation::HGLOBAL(std::ptr::null_mut()), true).ok()?;
         let factory: IWICImagingFactory =
             CoCreateInstance(&CLSID_WICImagingFactory, None, CLSCTX_INPROC_SERVER).ok()?;
         let frames = frame_block(game_pid)?;
@@ -323,7 +323,7 @@ impl Capture {
 
     // Decode the PNG CapturePreview wrote into the stream into the block
     unsafe fn publish(&mut self) -> windows::core::Result<()> {
-        self.stream.Seek(0, STREAM_SEEK_SET)?;
+        self.stream.Seek(0, STREAM_SEEK_SET, None)?;
         let decoder = self.factory.CreateDecoderFromStream(
             &self.stream,
             std::ptr::null(),
@@ -374,7 +374,7 @@ fn capture_next(mut capture: Box<Capture>) {
         keep_parked(capture.hwnd);
         capture.started = Instant::now();
         let _ = capture.stream.SetSize(0);
-        let _ = capture.stream.Seek(0, STREAM_SEEK_SET);
+        let _ = capture.stream.Seek(0, STREAM_SEEK_SET, None);
         let webview = capture.webview.clone();
         let stream = capture.stream.clone();
         let handler = CapturePreviewCompletedHandler::create(Box::new(move |result| {
@@ -416,7 +416,7 @@ fn capture_next(mut capture: Box<Capture>) {
 
 // The named shared memory block the game reads
 struct FrameBlock {
-    mapping: isize,
+    mapping: HANDLE,
     view: *mut u8,
 }
 
@@ -454,7 +454,7 @@ impl FrameBlock {
             size as u32,
             name.as_ptr(),
         );
-        if mapping == 0 {
+        if mapping.is_null() {
             return None;
         }
         // Map exactly the size needed: this fails if another process created a

@@ -9,7 +9,7 @@ const CORNER_RADIUS: f64 = 10.0;
 pub fn is_wine() -> bool {
     let module_name = to_wide("ntdll.dll");
     let module = unsafe { GetModuleHandleW(module_name.as_ptr()) };
-    if module == 0 {
+    if module.is_null() {
         return false;
     }
 
@@ -68,7 +68,7 @@ fn apply_rounded_region(window: &Window) {
 
     if window.is_maximized().unwrap_or(false) {
         unsafe {
-            SetWindowRgn(hwnd.0, 0, 1);
+            SetWindowRgn(hwnd.0 as _, std::ptr::null_mut(), 1);
         }
         return;
     }
@@ -80,11 +80,11 @@ fn apply_rounded_region(window: &Window) {
 
     unsafe {
         let region = CreateRoundRectRgn(0, 0, width + 1, height + 1, diameter, diameter);
-        if region == 0 {
+        if region.is_null() {
             return;
         }
         // On success the system owns the region.
-        if SetWindowRgn(hwnd.0, region, 1) == 0 {
+        if SetWindowRgn(hwnd.0 as _, region, 1) == 0 {
             DeleteObject(region);
         }
     }
@@ -102,7 +102,7 @@ pub fn show_webview_startup_error(error: &str) {
     );
 
     unsafe {
-        MessageBoxW(0, message.as_ptr(), title.as_ptr(), MB_OK | MB_ICONERROR);
+        MessageBoxW(std::ptr::null_mut(), message.as_ptr(), title.as_ptr(), MB_OK | MB_ICONERROR);
     }
 }
 
