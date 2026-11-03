@@ -170,6 +170,7 @@ pub fn attach(window: &Window, game_pid: i32) {
             log::warn!("[wine_overlay] no CoreWebView2 for the overlay window");
             return;
         };
+        let core: ICoreWebView2 = std::mem::transmute(core);
         match Capture::new(hwnd, game_pid as u32, core, owner, state) {
             Some(capture) => {
                 log::info!(
