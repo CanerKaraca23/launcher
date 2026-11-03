@@ -59,9 +59,9 @@ const App = memo(() => {
   useWineCursorReset(isWine && !IN_GAME);
   const { theme } = useTheme();
   const { language } = useGenericPersistentState();
-  const windowSize = useRef<PhysicalSize>();
-  const mainWindowSize = useRef<LogicalSize>();
-  const processCheckInterval = useRef<NodeJS.Timeout>();
+  const windowSize = useRef<PhysicalSize | undefined>(undefined);
+  const mainWindowSize = useRef<LogicalSize | undefined>(undefined);
+  const processCheckInterval = useRef<NodeJS.Timeout | undefined>(undefined);
 
   const windowResizeListener = useCallback(
     throttle(async ({ payload }: { payload: PhysicalSize }) => {

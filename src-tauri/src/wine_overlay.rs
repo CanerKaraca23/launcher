@@ -30,7 +30,7 @@ use windows::Win32::System::Com::{
     CoCreateInstance, IStream, CLSCTX_INPROC_SERVER, STREAM_SEEK_SET,
 };
 use windows_sys::Win32::Foundation::{
-    CloseHandle, HWND, INVALID_HANDLE_VALUE, LPARAM, LRESULT, WPARAM,
+    CloseHandle, HANDLE, HWND, INVALID_HANDLE_VALUE, LPARAM, LRESULT, WPARAM,
 };
 use windows_sys::Win32::System::Memory::{
     CreateFileMappingW, MapViewOfFile, UnmapViewOfFile, FILE_MAP_ALL_ACCESS,
@@ -158,19 +158,20 @@ pub fn attach(window: &Window, game_pid: i32) {
             event,
             WindowEvent::Moved(_) | WindowEvent::Resized(_) | WindowEvent::Focused(_)
         ) {
-            unsafe { keep_parked(hwnd) };
+            unsafe { keep_parked(hwnd as _) };
         }
     });
 
     // WebView2 and window subclassing both want the window's own thread
     let owner = window.clone();
     let _ = window.with_webview(move |webview| unsafe {
-        park(hwnd);
+        park(hwnd as _);
         let Ok(core) = webview.controller().CoreWebView2() else {
             log::warn!("[wine_overlay] no CoreWebView2 for the overlay window");
             return;
         };
-        match Capture::new(hwnd, game_pid as u32, core, owner, state) {
+        let core: ICoreWebView2 = std::mem::transmute(core);
+        match Capture::new(hwnd as _, game_pid as u32, core, owner, state) {
             Some(capture) => {
                 log::info!(
                     "[wine_overlay] serving overlay frames for game {}",
@@ -305,7 +306,7 @@ impl Capture {
         window: Window,
         state: Arc<OverlayState>,
     ) -> Option<Self> {
-        let stream = CreateStreamOnHGlobal(0, true).ok()?;
+        let stream = CreateStreamOnHGlobal(windows::Win32::Foundation::HGLOBAL(std::ptr::null_mut()), true).ok()?;
         let factory: IWICImagingFactory =
             CoCreateInstance(&CLSID_WICImagingFactory, None, CLSCTX_INPROC_SERVER).ok()?;
         let frames = frame_block(game_pid)?;
@@ -323,7 +324,7 @@ impl Capture {
 
     // Decode the PNG CapturePreview wrote into the stream into the block
     unsafe fn publish(&mut self) -> windows::core::Result<()> {
-        self.stream.Seek(0, STREAM_SEEK_SET)?;
+        self.stream.Seek(0, STREAM_SEEK_SET, None)?;
         let decoder = self.factory.CreateDecoderFromStream(
             &self.stream,
             std::ptr::null(),
@@ -374,7 +375,7 @@ fn capture_next(mut capture: Box<Capture>) {
         keep_parked(capture.hwnd);
         capture.started = Instant::now();
         let _ = capture.stream.SetSize(0);
-        let _ = capture.stream.Seek(0, STREAM_SEEK_SET);
+        let _ = capture.stream.Seek(0, STREAM_SEEK_SET, None);
         let webview = capture.webview.clone();
         let stream = capture.stream.clone();
         let handler = CapturePreviewCompletedHandler::create(Box::new(move |result| {
@@ -416,7 +417,7 @@ fn capture_next(mut capture: Box<Capture>) {
 
 // The named shared memory block the game reads
 struct FrameBlock {
-    mapping: isize,
+    mapping: HANDLE,
     view: *mut u8,
 }
 
@@ -454,7 +455,7 @@ impl FrameBlock {
             size as u32,
             name.as_ptr(),
         );
-        if mapping == 0 {
+        if mapping.is_null() {
             return None;
         }
         // Map exactly the size needed: this fails if another process created a

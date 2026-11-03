@@ -10,8 +10,6 @@ use std::io::{Cursor, Read};
 #[cfg(target_os = "windows")]
 use std::path::Path;
 #[cfg(target_os = "windows")]
-use tauri::api::path::document_dir;
-#[cfg(target_os = "windows")]
 use winreg::enums::*;
 #[cfg(target_os = "windows")]
 use winreg::RegKey;
@@ -21,7 +19,7 @@ const MODEL_CACHE_VALUE: &str = "model_cache";
 
 #[cfg(target_os = "windows")]
 fn default_model_cache_folder() -> Result<String, String> {
-    let documents = document_dir().ok_or("Could not find the Documents folder")?;
+    let documents = dirs_next::document_dir().ok_or("Could not find the Documents folder")?;
     let cache = documents
         .join("GTA San Andreas User Files")
         .join("SAMP")
@@ -148,7 +146,7 @@ pub fn get_samp_favorite_list() -> String {
         favorite_servers: Vec::<SAMPServerInfo>::from([]),
     };
 
-    let documents_path = match document_dir() {
+    let documents_path = match dirs_next::document_dir() {
         Some(path) => match path.to_str() {
             Some(path_str) => path_str.to_string(),
             None => return serde_json::to_string(&samp_user_data).unwrap_or_default(),

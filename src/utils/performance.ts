@@ -89,7 +89,7 @@ export const useStableCallback = <T extends (...args: any[]) => any>(
 };
 
 export const usePrevious = <T>(value: T): T | undefined => {
-  const ref = React.useRef<T>();
+  const ref = React.useRef<T | undefined>(undefined);
 
   React.useEffect(() => {
     ref.current = value;
@@ -102,7 +102,7 @@ export const useDeepCompareMemo = <T>(
   factory: () => T,
   deps: React.DependencyList
 ): T => {
-  const ref = React.useRef<{ deps: React.DependencyList; value: T }>();
+  const ref = React.useRef<{ deps: React.DependencyList; value: T } | undefined>(undefined);
 
   if (!ref.current || !deepEqual(ref.current.deps, deps)) {
     ref.current = { deps, value: factory() };

@@ -174,8 +174,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: sc(38),
     borderRadius: sc(5),
-    // @ts-ignore
-    outlineStyle: "none",
+    outlineStyle: "none" as any,
   },
   addButton: {
     width: 300,
