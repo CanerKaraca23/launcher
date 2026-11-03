@@ -150,7 +150,7 @@ pub fn attach(window: &Window, game_pid: i32) {
     let Ok(hwnd) = window.hwnd() else {
         return;
     };
-    let hwnd: HWND = hwnd.0 as HWND;
+    let hwnd = hwnd.0;
 
     // tao re-applies its own styles on some changes, so put ours back
     window.on_window_event(move |event| {
@@ -158,20 +158,20 @@ pub fn attach(window: &Window, game_pid: i32) {
             event,
             WindowEvent::Moved(_) | WindowEvent::Resized(_) | WindowEvent::Focused(_)
         ) {
-            unsafe { keep_parked(hwnd) };
+            unsafe { keep_parked(hwnd as _) };
         }
     });
 
     // WebView2 and window subclassing both want the window's own thread
     let owner = window.clone();
     let _ = window.with_webview(move |webview| unsafe {
-        park(hwnd);
+        park(hwnd as _);
         let Ok(core) = webview.controller().CoreWebView2() else {
             log::warn!("[wine_overlay] no CoreWebView2 for the overlay window");
             return;
         };
         let core: ICoreWebView2 = std::mem::transmute(core);
-        match Capture::new(hwnd, game_pid as u32, core, owner, state) {
+        match Capture::new(hwnd as _, game_pid as u32, core, owner, state) {
             Some(capture) => {
                 log::info!(
                     "[wine_overlay] serving overlay frames for game {}",
