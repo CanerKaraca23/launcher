@@ -125,7 +125,7 @@
     "@babel/parser" "^7.29.7"
     "@babel/types" "^7.29.7"
 
-"@babel/traverse@^7.29.0", "@babel/traverse@^7.29.10", "@babel/traverse@^7.29.13", "@babel/traverse@^7.29.14", "@babel/traverse@^7.29.7":
+"@babel/traverse@^7.29.10", "@babel/traverse@^7.29.13", "@babel/traverse@^7.29.14", "@babel/traverse@^7.29.7":
   version "7.29.15"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.29.15.tgz#244572b939ceff7cae12f2a17fd76a2d89f4201c"
   integrity sha512-ZfawBo2i8vvt+BTt37dWDKBPjUfm/H+bw+ltwsCRhW7gPtyNVwUXuNo54eO2Xo+P4VXpalPFfFISbBTRKC8SOQ==
@@ -282,10 +282,10 @@
   resolved "https://registry.yarnpkg.com/@oxc-project/types/-/types-0.156.0.tgz#00e35b1ead490d81b4c7fe1dbfe35fc55e89c5e6"
   integrity sha512-1Duyg48TdJNdyhEB8Xn1L36bT9Pv6GUtlKjHxOys8xkaF/rQq3XJE+bAurSK/AgIz5mGFsb77cn9Pb20+WCScw==
 
-"@react-native-clipboard/clipboard@^1.16.3":
-  version "1.16.3"
-  resolved "https://registry.yarnpkg.com/@react-native-clipboard/clipboard/-/clipboard-1.16.3.tgz#7807a90fd9984bf4d3a96faf2eee20457984a9bd"
-  integrity sha512-cMIcvoZKIrShzJHEaHbTAp458R9WOv0fB6UyC7Ek4Qk561Ow/DrzmmJmH/rAZg21Z6ixJ4YSdFDC14crqIBmCQ==
+"@react-native-clipboard/clipboard@^1.17.0":
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/@react-native-clipboard/clipboard/-/clipboard-1.17.0.tgz#07c290aafc5e6358c9345f3382cb861648a6ebdd"
+  integrity sha512-nd/5Nw+grQfkFmaqulOZWgAe6BzuwZNdbYRExxyNtW+qxYdHWZG4w1VueiKfAlxYc1ti2gRXbd9xCiFR68WZWw==
 
 "@react-native/asset-utils@0.88.1":
   version "0.88.1"
@@ -1340,10 +1340,10 @@ hyphenate-style-name@^1.0.3:
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.1.0.tgz#1797bf50369588b47b72ca6d5e65374607cf4436"
   integrity sha512-WDC/ui2VVRrz3jOVi+XtjqkDjiVjTtFaAGiW37k6b+ohyQ5wYDOGkvCZa8+H0nx3gyvv0+BST9xuOgIyGQ00gw==
 
-i18next@^27.2.2:
-  version "27.2.2"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-27.2.2.tgz#2e22344c7a2c895a299b1f56065b159001f99f10"
-  integrity sha512-1/AJgz/bpE/YL6tqekQlZAzDhkmrUBbgU8+Xon/Lwv6c5WdYuyFZ9mb86OVfR2C2XujUDT7Rz23Ydaq4l981lA==
+i18next@^27.2.4:
+  version "27.2.4"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-27.2.4.tgz#65e153e18ced490114acd89d184d1e2543826888"
+  integrity sha512-Twhl6dx3IznvyQEv7rrYH2xBMAmOIjNuj/lPicevTa0d/fxg4Km315MlAI07SOWQcw2pypA4qf39RoMJgJ8WEQ==
 
 inherits@~2.0.4:
   version "2.0.4"
@@ -1682,7 +1682,7 @@ metro-resolver@0.87.3:
   dependencies:
     flow-enums-runtime "^0.0.6"
 
-metro-runtime@0.87.3:
+metro-runtime@0.87.3, metro-runtime@^0.87.1:
   version "0.87.3"
   resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.87.3.tgz#d7e4c8ff9a0acc3da37a2f30cd43ddc7c97095da"
   integrity sha512-2kGsO2ouF5V8m9teQcrmCbH9HonkxgNpyFq1t36x78Xc2fZ3CsE/sKnntEmHS7Uj8bgeObjaXa92caTRk0D6ww==
@@ -1690,29 +1690,7 @@ metro-runtime@0.87.3:
     "@babel/runtime" "^7.25.0"
     flow-enums-runtime "^0.0.6"
 
-metro-runtime@^0.87.1:
-  version "0.87.2"
-  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.87.2.tgz#a22735a9ae2b9cc94db52c98b00349e6935fcaf8"
-  integrity sha512-68CLgcufiI162xyhSyI3Ax1kYPmUxKV6mt7Ll6gNd6Lb5ayJ+tQ1G7G+02Hda2ekV88Vq5zTsJ5hv2qpAhZa8g==
-  dependencies:
-    "@babel/runtime" "^7.25.0"
-    flow-enums-runtime "^0.0.6"
-
-metro-source-map@0.87.2, metro-source-map@^0.87.1:
-  version "0.87.2"
-  resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.87.2.tgz#270892e157b42a13e2868d61d2dfcd5e72848398"
-  integrity sha512-6jqJ/b+Ho36JmiI1pAjSWvnuDHqLCkF6Pjv4bxyjESu+18TrqvPwOS82QXQwyrr+haoc5kVnguxrgRWFhuqbEg==
-  dependencies:
-    "@babel/traverse" "^7.29.0"
-    "@babel/types" "^7.29.8"
-    flow-enums-runtime "^0.0.6"
-    invariant "^2.2.4"
-    metro-symbolicate "0.87.2"
-    nullthrows "^1.1.1"
-    ob1 "0.87.2"
-    source-map "^0.5.6"
-
-metro-source-map@0.87.3:
+metro-source-map@0.87.3, metro-source-map@^0.87.1:
   version "0.87.3"
   resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.87.3.tgz#7425e196d7fccb64b4fa19c12f141cd7d89a4c80"
   integrity sha512-kvgC0nIP1emXDiMLhmcy1AOxZrfPMWxrvYqOMNVXvKbObtakGXqu60WpeSVlzo3VBfXCMmZDBz1SvsP80Ug+kQ==
@@ -1726,18 +1704,6 @@ metro-source-map@0.87.3:
     nullthrows "^1.1.1"
     ob1 "0.87.3"
     source-map "^0.5.6"
-
-metro-symbolicate@0.87.2:
-  version "0.87.2"
-  resolved "https://registry.yarnpkg.com/metro-symbolicate/-/metro-symbolicate-0.87.2.tgz#2ed726a713b0b82484e53248974a1abe5f378fcd"
-  integrity sha512-bAE3KvaYjlyOzBHE+FI7NnG57bGoW+n9Et1leevreuMXYEaIhN/CmfCh3fRuApoj5LnJg1rFlxCXaJsIc4P5Gg==
-  dependencies:
-    flow-enums-runtime "^0.0.6"
-    invariant "^2.2.4"
-    metro-source-map "0.87.2"
-    nullthrows "^1.1.1"
-    source-map "^0.5.6"
-    vlq "^1.0.0"
 
 metro-symbolicate@0.87.3:
   version "0.87.3"
@@ -1910,13 +1876,6 @@ nullthrows@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/nullthrows/-/nullthrows-1.1.1.tgz#7818258843856ae971eae4208ad7d7eb19a431b1"
   integrity sha512-2vPPEi+Z7WqML2jZYddDIfy5Dqb0r2fze2zTxNNknZaFpVHU3mFB3R+DWeJWGVx0ecvttSGlJTI+WG+8Z4cDWw==
-
-ob1@0.87.2:
-  version "0.87.2"
-  resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.87.2.tgz#fd501959fcf2c5f0f36beb8ac189a4face57e7ba"
-  integrity sha512-KLdsz/5QTEG2Y7lhxEOYNBZX7MkD0m3Cu11B72TBJ6sCKGXYatLJ/4WtMKoGLalQyozFYDutPRpsWpDRRA+E4g==
-  dependencies:
-    flow-enums-runtime "^0.0.6"
 
 ob1@0.87.3:
   version "0.87.3"
