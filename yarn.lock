@@ -1341,9 +1341,9 @@ hyphenate-style-name@^1.0.3:
   integrity sha512-WDC/ui2VVRrz3jOVi+XtjqkDjiVjTtFaAGiW37k6b+ohyQ5wYDOGkvCZa8+H0nx3gyvv0+BST9xuOgIyGQ00gw==
 
 i18next@^27.2.4:
-  version "27.2.4"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-27.2.4.tgz#65e153e18ced490114acd89d184d1e2543826888"
-  integrity sha512-Twhl6dx3IznvyQEv7rrYH2xBMAmOIjNuj/lPicevTa0d/fxg4Km315MlAI07SOWQcw2pypA4qf39RoMJgJ8WEQ==
+  version "27.2.10"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-27.2.10.tgz#1a0f2f4317052019dbbb8d8cf17c11cff9363f4e"
+  integrity sha512-v2hQPOZ4yvfhK5CNyXevVjneTX85rDxgTKSV96tftmp89yrF1MEFIDV0i6jYKEnzR3lnWDe62HktDFy6624/UQ==
 
 inherits@~2.0.4:
   version "2.0.4"
